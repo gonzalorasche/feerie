@@ -1000,12 +1000,12 @@ img {
   transform: scale(1.05);
 }
 
-/* RESPONSIVE VERTICAL - MOBILE */
+/* RESPONSIVE VERTICAL - MOBILE (600px) */
 @media (max-width: 600px) {
   .services {
     height: auto;
     min-height: 100vh;
-    padding: 8rem 0 4rem;
+    padding: 6rem 0 4rem;
     overflow: visible;
   }
   .services__container {
@@ -1016,50 +1016,82 @@ img {
   .services__grid {
     grid-template-columns: 1fr;
     height: auto;
-    gap: 1.2rem;
+    gap: 2.5rem;
     margin: 0;
   }
   .services__title {
     letter-spacing: 0.15em;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     width: 100%;
   }
   .card {
-    flex-direction: row;
-    height: 150px;
+    flex-direction: column;
+    height: auto;
     gap: 0;
-    background-color: rgba(182, 124, 129, 0.03);
-    border: 1px solid rgba(182, 124, 129, 0.05);
+    background-color: transparent;
+    border: none;
+    /* --- AJUSTES MANUALES PARA QUE NO SE CORTEN --- */
   }
   .card__image-wrapper {
-    flex: 0 0 45%;
-    height: 100%;
+    width: 100%;
+    aspect-ratio: 16/9; /* Volvemos al tamaño original que te encantó */
     filter: grayscale(0%);
-    border: none;
-    border-right: 1px solid rgba(182, 124, 129, 0.1);
+    border: 1px solid rgba(182, 124, 129, 0.1);
+    margin-bottom: 1.2rem;
+    overflow: hidden;
   }
   .card__image-wrapper img {
     width: 100%;
     height: 100%;
     -o-object-fit: cover;
        object-fit: cover;
+    display: block;
+    -o-object-position: center center;
+       object-position: center center; /* Default */
   }
   .card__info {
-    flex: 1;
-    padding: 0 1.5rem;
+    width: 100%;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
   }
   .card__title {
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.2;
     text-align: left;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
   .card__title span {
-    font-size: 0.8rem;
-    margin-top: 0.3rem;
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
     display: block;
+    opacity: 0.8;
+  }
+  .card--gogo .card__image-wrapper img {
+    -o-object-position: center 35%;
+       object-position: center 35%;
+  }
+  .card--greeters .card__image-wrapper img {
+    -o-object-position: center 5%;
+       object-position: center 5%;
+  }
+  .card--burlesque .card__image-wrapper img {
+    -o-object-position: center 25%;
+       object-position: center 25%;
+  }
+  .card--flamenco .card__image-wrapper img {
+    -o-object-position: center 30%;
+       object-position: center 30%;
+  }
+  .card--vintage .card__image-wrapper img {
+    -o-object-position: center 10%;
+       object-position: center 10%;
+  }
+  .card--fire .card__image-wrapper img {
+    -o-object-position: center 20%;
+       object-position: center 20%;
   }
 }
 /* RESPONSIVE HORIZONTAL - LANDSCAPE (Móviles de lado) */

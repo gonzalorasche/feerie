@@ -106,16 +106,15 @@
 
 
 
-/* RESPONSIVE VERTICAL - MOBILE */
+/* RESPONSIVE VERTICAL - MOBILE (600px) */
 @media (max-width: 600px) {
     .services {
         height: auto; 
         min-height: 100vh;
-        padding: 8rem 0 4rem; // Solo padding vertical aquí
+        padding: 6rem 0 4rem; 
         overflow: visible;
 
         &__container {
-            // Sincronización total con _reset
             width: 100%;
             padding-right: v.$container-gutter-mobile;
             padding-left: v.$container-gutter-mobile;
@@ -124,62 +123,91 @@
         &__grid {
             grid-template-columns: 1fr; 
             height: auto;
-            gap: 1.2rem;
-            // Quitamos márgenes extra si los hubiera para que mande el container
+            gap: 2.5rem; 
             margin: 0; 
         }
 
         &__title {
             letter-spacing: 0.15em;
-            margin-bottom: 4rem;
-            // Aseguramos que el título no ignore el padding del container
+            margin-bottom: 3rem;
             width: 100%; 
         }
     }
 
     .card {
-        flex-direction: row; 
-        height: 150px; 
+        flex-direction: column; 
+        height: auto; 
         gap: 0; 
-        background-color: rgba(v.$bone-300, 0.03); 
-        border: 1px solid rgba(v.$bone-300, 0.05);
+        background-color: transparent; 
+        border: none;
 
         &__image-wrapper {
-            flex: 0 0 45%; 
-            height: 100%;
+            width: 100%; 
+            aspect-ratio: 16 / 9; /* Volvemos al tamaño original que te encantó */
             filter: grayscale(0%);
-            border: none;
-            border-right: 1px solid rgba(v.$bone-300, 0.1);
+            border: 1px solid rgba(v.$bone-300, 0.1); 
+            margin-bottom: 1.2rem; 
+            overflow: hidden;
             
             img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                display: block;
+                object-position: center center; /* Default */
             }
         }
 
         &__info {
-            flex: 1;
-            padding: 0 1.5rem;
+            width: 100%;
+            padding: 0; 
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         &__title {
-            font-size: 1rem;
+            font-size: 1.2rem; 
             line-height: 1.2;
-            text-align: left; // Forzamos alineación a la izquierda por el diseño horizontal
+            text-align: left; 
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
             
             span {
-                font-size: 0.8rem;
-                margin-top: 0.3rem;
-                display: block; // Asegura que el span baje
+                font-size: 0.9rem;
+                margin-top: 0.4rem;
+                display: block; 
+                opacity: 0.8;
             }
+        }
+
+        /* --- AJUSTES MANUALES PARA QUE NO SE CORTEN --- */
+        
+        &--gogo &__image-wrapper img {
+            object-position: center 35%; 
+        }
+
+        &--greeters &__image-wrapper img {
+            object-position: center 5%; 
+        }
+
+        &--burlesque &__image-wrapper img {
+            object-position: center 25%; 
+        }
+
+        &--flamenco &__image-wrapper img {
+            object-position: center 30%; 
+        }
+
+        &--vintage &__image-wrapper img {
+            object-position: center 10%; 
+        }
+
+        &--fire &__image-wrapper img {
+            object-position: center 20%; 
         }
     }
 }
-
 
 
 
