@@ -143,7 +143,7 @@
 
         &__image-wrapper {
             width: 100%; 
-            aspect-ratio: 16 / 9; /* Volvemos al tamaño original que te encantó */
+            aspect-ratio: 16 / 9; 
             filter: grayscale(0%);
             border: 1px solid rgba(v.$bone-300, 0.1); 
             margin-bottom: 1.2rem; 
@@ -154,7 +154,8 @@
                 height: 100%;
                 object-fit: cover;
                 display: block;
-                object-position: center center; /* Default */
+                /* El default por si te olvidas de una clase */
+                object-position: center center; 
             }
         }
 
@@ -180,32 +181,32 @@
                 opacity: 0.8;
             }
         }
+    }
 
-        /* --- AJUSTES MANUALES PARA QUE NO SE CORTEN --- */
-        
-        &--gogo &__image-wrapper img {
-            object-position: center 35%; 
-        }
+    /* --- AJUSTES MANUALES POR CLASE DE IMAGEN --- */
+    
+    .foto-gogo { 
+        object-position: center 35% !important; 
+    }
 
-        &--greeters &__image-wrapper img {
-            object-position: center 5%; 
-        }
+    .foto-greeters { 
+        object-position: center 25% !important; 
+    }
 
-        &--burlesque &__image-wrapper img {
-            object-position: center 25%; 
-        }
+    .foto-burlesque { 
+        object-position: center 25% !important; 
+    }
 
-        &--flamenco &__image-wrapper img {
-            object-position: center 30%; 
-        }
+    .foto-flamenco { 
+        object-position: center 30% !important; 
+    }
 
-        &--vintage &__image-wrapper img {
-            object-position: center 10%; 
-        }
+    .foto-vintage { 
+        object-position: center 10% !important; 
+    }
 
-        &--fire &__image-wrapper img {
-            object-position: center 20%; 
-        }
+    .foto-fire { 
+        object-position: center 20% !important; 
     }
 }
 

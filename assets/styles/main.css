@@ -1030,11 +1030,10 @@ img {
     gap: 0;
     background-color: transparent;
     border: none;
-    /* --- AJUSTES MANUALES PARA QUE NO SE CORTEN --- */
   }
   .card__image-wrapper {
     width: 100%;
-    aspect-ratio: 16/9; /* Volvemos al tamaño original que te encantó */
+    aspect-ratio: 16/9;
     filter: grayscale(0%);
     border: 1px solid rgba(182, 124, 129, 0.1);
     margin-bottom: 1.2rem;
@@ -1046,8 +1045,9 @@ img {
     -o-object-fit: cover;
        object-fit: cover;
     display: block;
+    /* El default por si te olvidas de una clase */
     -o-object-position: center center;
-       object-position: center center; /* Default */
+       object-position: center center;
   }
   .card__info {
     width: 100%;
@@ -1069,29 +1069,30 @@ img {
     display: block;
     opacity: 0.8;
   }
-  .card--gogo .card__image-wrapper img {
-    -o-object-position: center 35%;
-       object-position: center 35%;
+  /* --- AJUSTES MANUALES POR CLASE DE IMAGEN --- */
+  .foto-gogo {
+    -o-object-position: center 35% !important;
+       object-position: center 35% !important;
   }
-  .card--greeters .card__image-wrapper img {
-    -o-object-position: center 5%;
-       object-position: center 5%;
+  .foto-greeters {
+    -o-object-position: center 25% !important;
+       object-position: center 25% !important;
   }
-  .card--burlesque .card__image-wrapper img {
-    -o-object-position: center 25%;
-       object-position: center 25%;
+  .foto-burlesque {
+    -o-object-position: center 25% !important;
+       object-position: center 25% !important;
   }
-  .card--flamenco .card__image-wrapper img {
-    -o-object-position: center 30%;
-       object-position: center 30%;
+  .foto-flamenco {
+    -o-object-position: center 30% !important;
+       object-position: center 30% !important;
   }
-  .card--vintage .card__image-wrapper img {
-    -o-object-position: center 10%;
-       object-position: center 10%;
+  .foto-vintage {
+    -o-object-position: center 10% !important;
+       object-position: center 10% !important;
   }
-  .card--fire .card__image-wrapper img {
-    -o-object-position: center 20%;
-       object-position: center 20%;
+  .foto-fire {
+    -o-object-position: center 20% !important;
+       object-position: center 20% !important;
   }
 }
 /* RESPONSIVE HORIZONTAL - LANDSCAPE (Móviles de lado) */
