@@ -1,0 +1,18 @@
+// main.scss
+
+// 1. LAS VARIABLES PRIMERO
+@use 'base/variables' as v;
+
+// 2. LAS FUENTES
+@use 'base/fonts'; 
+
+// 3. EL RESTO DE LOS MÓDULOS
+@use 'base/reset';
+@use 'components/buttons';
+@use 'components/modal'; // <--- OJO ACÁ: Antes decía layout/modal
+@use 'layout/header';
+@use 'layout/hero';
+@use 'layout/services';
+@use 'layout/about';
+@use 'layout/contact';
+@use 'layout/footer';

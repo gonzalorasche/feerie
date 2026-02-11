@@ -1,0 +1,215 @@
+@use '../base/variables' as v;
+
+.contact {
+    padding: 12rem 0;
+    background: radial-gradient(circle at 10% 20%, rgba(v.$accent-petal, 0.05), transparent 50%),
+                v.$night-900;
+    position: relative;
+    overflow: hidden;
+
+    &__container {
+        width: 100%;
+        max-width: v.$container-max; 
+        margin: 0 auto;
+        padding: 0 v.$container-gutter;
+        
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr; 
+        gap: 12rem;
+        align-items: start;
+
+        @media (max-width: 900px) {
+            grid-template-columns: 1fr;
+            gap: 6rem;
+        }
+    }
+
+    &__info {
+        h2 {
+            text-align: left;
+            font-family: v.$font-body;
+            font-weight: v.$weight-bold;
+            font-size: clamp(3rem, 6vw, 5rem);
+            line-height: 1;
+            text-transform: uppercase;
+            
+            .main-title {
+                color: v.$accent-petal; 
+                display: block;
+                position: relative;
+                padding-bottom: 2.5rem;
+                margin-bottom: 3.5rem;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 80px;
+                    height: 2px;
+                    background-color: v.$accent-petal;
+                }
+
+                span { display: block; }
+            }
+
+            .contact-us {
+                display: block;
+                color: v.$bone-100; 
+                font-size: clamp(2.5rem, 5vw, 4.5rem);
+                letter-spacing: -0.02em;
+            }
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 5.5rem; 
+        width: 100%;
+    }
+
+    &__group {
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        &::before {
+            content: attr(data-number);
+            position: absolute;
+            left: -3rem;
+            top: 1.8rem;
+            font-family: v.$font-body;
+            font-size: 0.8rem;
+            color: v.$accent-petal;
+            opacity: 0.8;
+        }
+
+        /* ALERTA FLOTANTE Y ETÉREA */
+        .error-msg {
+            position: absolute;
+            top: -0.8rem; // Flota por encima de la línea
+            right: 0;
+            font-family: v.$font-body;
+            font-size: 0.65rem;
+            color: v.$accent-petal;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            opacity: 0;
+            transform: translateY(5px);
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+    }
+
+    input, textarea {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(v.$bone-300, 0.4);
+        padding: 1.5rem 0;
+        color: v.$bone-100;
+        font-family: v.$font-body;
+        font-size: 1.6rem;
+        border-radius: 0;
+        transition: all 0.4s ease;
+
+        &::placeholder {
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-size: 0.9rem;
+            color: rgba(v.$bone-100, 0.6);
+            transition: all 0.4s ease;
+        }
+
+        &:focus {
+            outline: none;
+            border-bottom-color: v.$accent-petal;
+            &::placeholder {
+                color: v.$accent-petal;
+                letter-spacing: 0.5em;
+            }
+        }
+
+        /* LÓGICA DE ERROR FLOTANTE */
+        &:invalid:not(:placeholder-shown) {
+            border-bottom-color: rgba(v.$accent-petal, 0.4);
+            & ~ .error-msg {
+                opacity: 1;
+                transform: translateY(0);
+                animation: floatMsg 3s ease-in-out infinite;
+            }
+        }
+
+        &:focus:invalid & ~ .error-msg {
+            opacity: 0.4; // Se desvanece al intentar corregir
+        }
+    }
+
+    textarea {
+        min-height: 100px;
+        resize: none;
+    }
+
+    &__btn {
+        align-self: flex-start;
+        background: transparent;
+        color: v.$bone-100;
+        border: 1px solid v.$accent-petal;
+        padding: 1.8rem 5rem;
+        font-family: v.$font-body;
+        font-weight: v.$weight-bold;
+        text-transform: uppercase;
+        letter-spacing: 0.4em;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.4s ease;
+
+        &:hover {
+            color: v.$night-900;
+            background-color: v.$accent-petal;
+        }
+    }
+}
+
+@keyframes floatMsg {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* ==========================================================================
+   RESPONSIVE VERTICAL
+   ========================================================================== */
+@media (max-width: 600px) {
+    .contact {
+        padding: 6rem 0;
+        &__container { padding: 0 v.$container-gutter-mobile; gap: 4rem; }
+        &__info h2 .main-title { margin-bottom: 2rem; padding-bottom: 1.5rem; &::after { width: 40px; } }
+        &__group::before { display: none; }
+        &__form { gap: 4rem; }
+        input, textarea, &__btn { font-size: 1.2rem; }
+        &__btn { width: 100%; text-align: center; }
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE HORIZONTAL (Landscape 100vh)
+   ========================================================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .contact {
+        height: 100vh; min-height: 420px;
+        display: flex; align-items: center; padding: 2rem 0;
+        &__container { grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+        &__info h2 {
+            font-size: clamp(1.8rem, 10vh, 2.8rem);
+            .main-title { margin-bottom: 1.5vh; padding-bottom: 1.5vh; }
+            .contact-us { font-size: clamp(1.6rem, 8vh, 2.4rem); }
+        }
+        &__form { gap: clamp(1.5rem, 5vh, 3.5rem); }
+        &__group::before { display: none; }
+        input, textarea { padding: 0.8rem 0; font-size: 1.1rem; }
+        textarea { min-height: 60px; height: 10vh; }
+        &__btn { padding: 1rem 3.5rem; font-size: 0.85rem; }
+    }
+}

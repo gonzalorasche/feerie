@@ -1,0 +1,164 @@
+@use '../base/variables' as v;
+
+/* ==========================================================
+   LAYOUT: HEADER (Versión Boutique - Public Sans Edition)
+========================================================== */
+
+.header {
+    height: 65px;
+    background-color: rgba(v.$night-900, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(v.$bone-100, 0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+
+    &__container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        max-width: v.$container-max;
+        margin: 0 auto;
+        
+        // Gutter (Márgenes laterales)
+        padding: 0 v.$container-gutter-mobile;
+
+        @media (min-width: 769px) {
+            padding: 0 v.$container-gutter;
+        }
+    }
+
+    /* --- LOGO --- */
+    &__logo-link {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    &__logo {
+        height: 45px; // Un poco más sutil
+        width: auto;
+        display: block;
+    }
+
+    /* --- NAVEGACIÓN --- */
+    &__nav {
+        @media (max-width: 992px) {
+            display: none !important; 
+        }
+    }
+
+    &__menu {
+        display: flex;
+        gap: 2.5rem; // Espaciado elegante
+        list-style: none;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+&__link {
+        font-family: v.$font-body;
+        font-size: 1.2rem;
+        font-weight: v.$weight-medium;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: v.$bone-200;
+        text-decoration: none;
+        opacity: 0.7; // Estado natural levemente apagado
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            opacity: 1;            // Se ilumina
+            color: v.$accent-petal; // Cambia al rosa suave
+        }
+    }
+
+    /* --- ACCIONES (Redes, Botón, Lang) --- */
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem; 
+        
+        @media (min-width: 993px) {
+            gap: 2.5rem;
+        }
+    }
+
+    /* Redes sociales */
+    &__social {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+
+        img {
+            height: 22px;
+            filter: brightness(0) invert(1);
+            transition: all 0.3s ease;
+            opacity: 0.7;
+
+            &:hover { 
+                transform: translateY(-2px);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 992px) {
+            display: none; 
+        }
+    }
+
+    /* Selector de Idioma */
+    &__lang {
+        font-family: v.$font-body;
+        font-size: 1.1rem; 
+        font-weight: v.$weight-regular;
+        color: v.$bone-300;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+
+        .lang-link {
+            transition: color 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+
+            &.is-active {
+                color: v.$accent-petal;
+                pointer-events: none;
+                font-weight: v.$weight-bold;
+            }
+
+            &:hover:not(.is-active) {
+                color: v.$bone-100;
+            }
+        }
+    }
+
+    /* BOTÓN CONTACTO (Nav Override) */
+    .btn--sm {
+        font-family: v.$font-body;
+        font-weight: v.$weight-bold;
+        letter-spacing: 0.1em;
+        height: 26px;
+        padding: 0 1.2rem;
+        font-size: 1.1rem !important;
+        border-radius: 2px; // Siguiendo tu estética recta
+        
+        @media (max-width: 480px) {
+            display: none !important; 
+        }
+    }
+}

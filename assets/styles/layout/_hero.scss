@@ -1,0 +1,269 @@
+@use '../base/variables' as v;
+
+.hero {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center; 
+    background-color: v.$night-900;
+    overflow: hidden;
+
+    &__bg {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background-image: url('../static/img/portada_1.webp'); 
+        background-size: cover;
+        background-position: left center;
+        background-repeat: no-repeat;
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to left, 
+                rgba(v.$night-900, 1) 0%, 
+                rgba(v.$night-900, 0.6) 40%, 
+                rgba(v.$night-900, 0) 100%
+            );
+        }
+    }
+
+    &__container {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: v.$container-max;
+        margin: 0 auto;
+        padding: 0 v.$container-gutter;
+        display: flex;
+        justify-content: flex-end; // Bloque a la derecha
+    }
+
+    &__content {
+        max-width: 580px;
+        text-align: left; // Texto alineado a la izquierda
+        position: relative;
+    }
+
+    &__title {
+        font-family: v.$font-titles; // Syne Regular
+        font-weight: 400;
+        font-size: clamp(4rem, 8vw, 6.8rem);
+        line-height: 1;
+        color: v.$bone-100;
+        text-transform: none;
+        margin-bottom: 2.5rem;
+        position: relative;
+
+        &--accent {
+            font-family: v.$font-accent; // Spectral Italic
+            font-style: italic;
+            font-weight: 500;
+            color: v.$accent-petal;
+            display: block;
+            font-size: 0.85em;
+            margin-top: 0.2rem;
+            
+            // Miscelánea 1: El guion editorial antes del acento
+            &::before {
+                content: '—';
+                margin-right: 1rem;
+                opacity: 0.6;
+                font-family: v.$font-body;
+                font-style: normal;
+            }
+        }
+    }
+
+    &__text {
+        font-family: v.$font-body; // Public Sans
+        font-weight: 300;
+        font-size: 1.7rem;
+        line-height: 1.8;
+        color: v.$bone-200;
+        max-width: 420px;
+        position: relative;
+        padding-left: 2.5rem; // Espacio para la miscelánea lateral
+
+        // Miscelánea 2: La línea vertical de acento que guía la lectura
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            bottom: 10px;
+            width: 1px;
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                v.$accent-petal 20%,
+                v.$accent-petal 80%,
+                transparent
+            );
+        }
+        
+        // Miscelánea 3: Resaltado dentro del texto
+        span {
+            font-family: v.$font-accent;
+            font-style: italic;
+            color: v.$accent-petal;
+            font-weight: 500;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================
+   RESPONSIVE: HERO (Mobile Vertical)
+========================================================== */
+@media (max-width: 576px) {
+    .hero {
+        align-items: flex-end; 
+        padding-bottom: 6vh;
+        overflow: hidden; // Vital para que el desborde del 102% no cree scroll
+
+        &__bg {
+            background-image: url('../static/img/portada_1_mobile_vertical.webp');
+            background-position: right top;
+            background-color: v.$night-900; 
+
+            &::after {
+                content: '';
+                position: absolute;
+                // SELLADO TOTAL: Sobresale 2% abajo y 2% a la derecha
+                top: 0;
+                left: 0;
+                width: 102%;  // Un poco más ancho para matar la línea derecha
+                height: 102%; // Un poco más alto para matar la línea inferior
+                z-index: 1;
+                
+                background: linear-gradient(
+                    to bottom,
+                    transparent 0%,
+                    rgba(v.$night-900, 0) 20%,      
+                    rgba(v.$night-900, 0.7) 45%,    
+                    rgba(v.$night-900, 1) 90%,      
+                    v.$night-900 100%
+                );
+                
+                backdrop-filter: blur(8px);
+                -webkit-mask-image: linear-gradient(to bottom, transparent 20%, black 70%, black 100%);
+                mask-image: linear-gradient(to bottom, transparent 20%, black 70%, black 100%);
+            }
+        }
+
+        &__container {
+            position: relative;
+            z-index: 10; 
+            justify-content: flex-start;
+            padding: 0 2.5rem;
+        }
+
+        // ... resto del contenido (title, text) se mantiene igual
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================
+   RESPONSIVE: HERO (Mobile Horizontal / Landscape)
+========================================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        // 1. Bajamos el texto del centro: Alineamos al fondo y subimos con padding
+        align-items: flex-end; 
+        padding-bottom: 15vh; // Esto lo deja por debajo del centro pero con aire
+
+        &__bg {
+            background-image: url('../static/img/portada_1_mobile_horizontal.webp');
+            background-position: left center; 
+
+            &::after {
+                content: '';
+                position: absolute;
+                inset: -2%; 
+                
+                // 2. NEGRO MÁS EXTENSO PERO MENOS INTENSO:
+                // Empieza muy pronto (10%) para generar clima, 
+                // pero el punto máximo es 0.85 (no negro puro) hasta el final.
+                background: linear-gradient(
+                    to right, 
+                    rgba(v.$night-900, 0) 0%, 
+                    rgba(v.$night-900, 0.3) 10%, // Empieza la penumbra temprano
+                    rgba(v.$night-900, 0.7) 50%, // Sombra media
+                    rgba(v.$night-900, 0.85) 100% // No llega a negro absoluto, deja ver textura
+                );
+
+                backdrop-filter: blur(4px); // Un poco menos de blur para que no sea tan pesado
+                -webkit-mask-image: linear-gradient(to right, transparent 10%, black 60%);
+                mask-image: linear-gradient(to right, transparent 10%, black 60%);
+            }
+        }
+
+        &__container {
+            display: flex;
+            justify-content: flex-end; 
+            padding-right: 10%; 
+            z-index: 10;
+        }
+
+        &__content {
+            max-width: 420px;
+            text-align: left;
+        }
+
+        &__title {
+            font-size: 3.2rem; // Ajustamos levemente para que no se coma el alto
+            line-height: 1;
+            margin-bottom: 0.8rem;
+            color: v.$bone-100;
+
+            &--accent {
+                display: block;
+                font-family: v.$font-accent;
+                font-style: italic;
+                color: v.$accent-petal;
+                font-size: 0.85em;
+                margin-top: 0.2rem;
+            }
+        }
+
+        &__text {
+            font-size: 1.4rem;
+            line-height: 1.5;
+            color: v.$bone-200;
+            max-width: 320px;
+            padding-left: 1.5rem;
+            border-left: 1px solid v.$accent-petal;
+        }
+    }
+}

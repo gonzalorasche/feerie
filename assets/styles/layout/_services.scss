@@ -1,0 +1,241 @@
+@use '../base/variables' as v;
+
+.services {
+    height: 100vh;
+    min-height: 700px;
+    background-color: v.$night-900;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Quitamos el padding de aquí para que lo maneje el container según el reset */
+    padding: 0; 
+    overflow: hidden;
+
+    &__container {
+        /* Content Wrapper basado en _reset.scss */
+        width: 100%;
+        max-width: v.$container-max;
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: v.$container-gutter;
+        padding-left: v.$container-gutter;
+    }
+
+    &__title {
+        font-family: v.$font-body; // Public Sans
+        font-weight: v.$weight-bold;
+        font-size: clamp(2.5rem, 5vh, 4rem);
+        color: v.$bone-100;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        margin-bottom: 5vh;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr); 
+        gap: 1.5rem;
+        height: 60vh;
+        
+        @media (max-width: 1024px) {
+            grid-template-columns: repeat(3, 1fr);
+            height: auto;
+            gap: 1rem;
+        }
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    height: 100%;
+
+    &__image-wrapper {
+        flex: 1;
+        overflow: hidden;
+        border: 1px solid rgba(v.$bone-300, 0.1);
+        filter: grayscale(100%);
+        transition: all 0.6s ease;
+    }
+
+    &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+
+    &__info {
+        padding: 1.5rem 0;
+    }
+
+    &__title {
+        font-family: v.$font-body;
+        font-weight: v.$weight-bold;
+        font-size: 1.1rem;
+        color: v.$bone-100;
+        text-transform: uppercase;
+
+        span {
+            display: block;
+            font-weight: v.$weight-regular;
+            font-size: 0.9rem;
+            color: v.$accent-petal; 
+            margin-top: 0.4rem;
+        }
+    }
+
+    &:hover {
+        .card__image-wrapper { 
+            filter: grayscale(0%); 
+            border-color: v.$accent-petal; 
+        }
+        .card__img { 
+            transform: scale(1.05); 
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* RESPONSIVE VERTICAL - MOBILE */
+@media (max-width: 600px) {
+    .services {
+        height: auto; 
+        min-height: 100vh;
+        padding: 8rem 0 4rem; // Solo padding vertical aquí
+        overflow: visible;
+
+        &__container {
+            // Sincronización total con _reset
+            width: 100%;
+            padding-right: v.$container-gutter-mobile;
+            padding-left: v.$container-gutter-mobile;
+        }
+
+        &__grid {
+            grid-template-columns: 1fr; 
+            height: auto;
+            gap: 1.2rem;
+            // Quitamos márgenes extra si los hubiera para que mande el container
+            margin: 0; 
+        }
+
+        &__title {
+            letter-spacing: 0.15em;
+            margin-bottom: 4rem;
+            // Aseguramos que el título no ignore el padding del container
+            width: 100%; 
+        }
+    }
+
+    .card {
+        flex-direction: row; 
+        height: 150px; 
+        gap: 0; 
+        background-color: rgba(v.$bone-300, 0.03); 
+        border: 1px solid rgba(v.$bone-300, 0.05);
+
+        &__image-wrapper {
+            flex: 0 0 45%; 
+            height: 100%;
+            filter: grayscale(0%);
+            border: none;
+            border-right: 1px solid rgba(v.$bone-300, 0.1);
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        &__info {
+            flex: 1;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        &__title {
+            font-size: 1rem;
+            line-height: 1.2;
+            text-align: left; // Forzamos alineación a la izquierda por el diseño horizontal
+            
+            span {
+                font-size: 0.8rem;
+                margin-top: 0.3rem;
+                display: block; // Asegura que el span baje
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* RESPONSIVE HORIZONTAL - LANDSCAPE (Móviles de lado) */
+@media (max-height: 500px) and (orientation: landscape) {
+    .services {
+        height: auto;
+        min-height: 100vh;
+        /* Ajustado a gutter-mobile según el reset */
+        padding: 4rem v.$container-gutter-mobile; 
+        display: block; 
+
+        &__title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        &__grid {
+            grid-template-columns: repeat(3, 1fr); 
+            grid-template-rows: auto;
+            gap: 1rem;
+            height: auto;
+            overflow: visible;
+        }
+    }
+
+    .card {
+        height: 250px; 
+
+        &__image-wrapper {
+            flex: 1; 
+            /* Imagen a color por defecto en landscape */
+            filter: grayscale(0%);
+        }
+
+        &__info {
+            padding: 0.8rem 0;
+            
+            h3 {
+                font-size: 0.9rem;
+            }
+
+            span {
+                font-size: 0.7rem;
+            }
+        }
+        
+        &:hover {
+            .card__img { transform: none; }
+        }
+    }
+}

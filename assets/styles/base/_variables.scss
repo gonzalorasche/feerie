@@ -1,0 +1,106 @@
+/* ==========================================================
+   COLOR SYSTEM — THE NIGHT CORE (Miami Burlesque)
+========================================================== */
+
+/* Velvet Darks (Fondos y sombras) */
+$night-900: #0a0104; // Negro con matiz vino (Fondo base)
+$night-800: #1d0209; // El color que pasaste (1d0209)
+$night-700: #2a040d; // Matiz para elevaciones/cards
+$night-600: #3d0a17;
+
+/* Bones & Silks (Textos y luz) */
+$bone-100: #f5f5f4; // Blanco hueso principal
+$bone-200: #d6ccc2; // Beige para textos secundarios
+$bone-300: #b67c81; // El color "rosa viejo" que pasaste (b67c81)
+
+/* Semantic backgrounds */
+$color-bg-main: $night-900;
+$color-bg-alt:  $night-800;
+$color-bg-muted: $night-700;
+$color-bg-dark: #000000;
+
+/* Semantic text */
+$color-text-main:    $bone-100; // Hueso sobre oscuro
+$color-text-strong:  #ffffff;
+$color-text-muted:   $bone-200;
+$color-text-soft:    $bone-300;
+$color-text-inverse: $night-900;
+
+
+/* ==========================================================
+   ACCENTS — BURLESQUE PALETTE
+========================================================== */
+
+$accent-petal: #f6c6d2; // El rosa claro (f6c6d2)
+$accent-wine:  #520e23; // El vino intenso (520e23)
+$accent-gold:  #c5a059; // Oro viejo para detalles VIP
+
+/* Accent routing */
+$color-accent-main: $accent-petal;  // Highlights y neones suaves
+$color-accent-soft: $bone-300;     // Transiciones
+$color-accent-strong: $accent-wine; // Botones y drama
+$color-accent-vip: $accent-gold;    // Etiquetas premium
+
+
+/* ==========================================================
+   TYPOGRAPHY (Updated to Syne + Public Sans + Spectral)
+========================================================== */
+
+/* Families */
+$font-titles: 'Syne', sans-serif;
+$font-body:   'Public Sans', sans-serif;
+$font-accent: 'Spectral', serif;
+
+/* Weights */
+$weight-light: 300;     // Public Sans Light
+$weight-regular: 400;   // Public Sans / Spectral
+$weight-medium: 500;    // Spectral Medium
+$weight-bold: 700;      // Public Sans Bold
+$weight-titles: 800;    // Syne ExtraBold
+
+/* Sizes (Clamped for responsiveness) */
+$fs-h1: clamp(2.5rem, 8vw, 4.5rem); // Más grande y dramático
+$fs-h2: clamp(1.8rem, 5vw, 2.8rem);
+$fs-h3: 1.5rem;
+
+// En _variables.scss
+$fs-small: 1.3rem; // 13px (Elegante pero legible)
+$fs-micro: 1.2rem; // 12px (El límite absoluto de legibilidad)
+
+
+
+/* ==========================================================
+   BUTTONS (Miami Night Style)
+========================================================== */
+
+$button-font: $font-body;
+$button-weight: $weight-bold;
+$button-letter-spacing: 0.15em;
+
+$button-bg: $accent-wine;
+$button-text: $bone-100;
+$button-border: 1px solid $accent-petal;
+
+
+/* ==========================================================
+   UI / SHAPE & EFFECTS
+========================================================== */
+
+$radius-xs: 0px; // Estética más recta y "Art Deco"
+$radius-sm: 2px;
+$radius-md: 4px;
+
+// Sombras sutiles pero profundas para capas oscuras
+$shadow-glow: 0 0 20px rgba(246, 198, 210, 0.15); 
+$card-divider: rgba(182, 124, 129, 0.15);
+
+
+/* ==========================================================
+   STRUCTURE & BOXING
+========================================================== */
+$container-max: 1200px;
+$container-gutter: 3rem;         // Espacio en escritorio
+$container-gutter-mobile: 2rem;  // Espacio en móviles (20px aprox)
+
+$section-padding: 8rem;       // Espaciado vertical entre secciones
+$section-padding-mobile: 5rem;

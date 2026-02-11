@@ -1,0 +1,368 @@
+@use '../base/variables' as v;
+
+.modal {
+    display: none; 
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(15px);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+
+    &.active { 
+        display: flex !important; 
+    }
+
+    &__container {
+        position: relative; 
+        background-color: v.$night-800;
+        width: 100%;
+        max-width: 1000px; 
+        height: 85vh; 
+        display: grid;
+        /* CAMBIO CLAVE: Texto 65% y Foto 35% para que sea un rectángulo vertical */
+        grid-template-columns: 65% 35%; 
+        border: 1px solid rgba(v.$bone-300, 0.1);
+        overflow: visible; 
+
+        @media (max-width: 900px) {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr;
+            height: 95vh;
+            overflow-y: auto;
+        }
+    }
+
+    &__close {
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        width: 40px;
+        height: 40px;
+        background-color: v.$bone-100;
+        color: v.$night-900;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 3100;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: v.$accent-petal;
+        }
+    }
+
+    &__info {
+        padding: 5rem; // Más aire para compensar que ahora tiene más ancho
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: v.$night-900;
+
+        h2 {
+            font-family: v.$font-body;
+            font-weight: v.$weight-bold;
+            font-size: 3rem;
+            color: v.$bone-100;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            
+            span { display: block; color: v.$accent-petal; font-size: 0.7em; }
+        }
+
+        p {
+            font-family: v.$font-body;
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: v.$bone-200;
+        }
+    }
+
+    &__carousel {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+
+        #modal-gallery {
+            width: 100%;
+            height: 100%;
+            img {
+                width: 100%;
+                height: 100%;
+                /* 'cover' ahora sí funciona perfecto porque el contenedor es vertical */
+                object-fit: cover;
+                animation: modalFade 0.4s ease;
+            }
+        }
+    }
+}
+
+/* NAVEGACIÓN ESTÁTICA */
+.carousel {
+    &__btn {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto; 
+        background: rgba(0, 0, 0, 0.4);
+        color: v.$bone-100;
+        border: none;
+        width: 50px; // Un poco más angostas para el nuevo ancho
+        height: 70px; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        cursor: pointer;
+        z-index: 10;
+        transition: color 0.3s ease, background-color 0.3s ease;
+
+        &:hover {
+            color: v.$accent-petal;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        &.prev { left: 0; }
+        &.next { right: 0; }
+
+        padding: 0;
+        line-height: 0;
+        outline: none;
+        appearance: none;
+    }
+
+    &__counter {
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        color: v.$bone-300;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 0.4rem 0.8rem;
+        font-family: v.$font-body;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        pointer-events: none;
+    }
+}
+
+@keyframes modalFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* RESPONSIVE VERTICAL - MODAL MOBILE */
+@media (max-width: 900px) {
+    .modal {
+        padding: 1rem; 
+
+        &__container {
+            grid-template-columns: 1fr; // Una sola columna
+            grid-template-rows: 1fr;    // La foto ocupa todo el fondo
+            height: 92vh; 
+            width: 100%;
+            overflow: hidden; // Evita el desborde del botón de cierre
+            position: relative;
+        }
+
+        &__close {
+            /* Botón dentro del contenedor */
+            top: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            font-size: 1.2rem;
+            background-color: rgba(v.$bone-100, 0.95);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        &__info {
+            /* Texto sobre la foto con degradado */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 5rem 2rem 2.5rem; // Más padding arriba para el degradado
+            background: linear-gradient(to top, 
+                rgba(0,0,0,1) 0%, 
+                rgba(0,0,0,0.85) 50%, 
+                rgba(0,0,0,0.4) 80%,
+                transparent 100%
+            );
+            z-index: 20;
+            pointer-events: none; 
+
+            h2 {
+                font-size: 2.2rem; // Tipografía grande y clara
+                margin-bottom: 0.8rem;
+                line-height: 1.1;
+                
+                span { 
+                    font-size: 0.5em; 
+                    margin-top: 0.2rem;
+                }
+            }
+
+            p {
+                font-size: 1.2rem; // Tamaño cómodo para lectura
+                line-height: 1.5;
+                color: v.$bone-100;
+                max-width: 95%;
+            }
+        }
+
+        &__carousel {
+            z-index: 10;
+            #modal-gallery img {
+                object-fit: cover; // Asegura que la foto vertical llene el espacio
+            }
+        }
+    }
+
+    .carousel {
+        &__btn {
+            z-index: 30;
+            width: 50px;
+            height: 70px;
+            font-size: 2rem;
+            background: rgba(0,0,0,0.3);
+            
+            &.prev { left: 0; }
+            &.next { right: 0; }
+        }
+
+        &__counter {
+            z-index: 30;
+            bottom: auto;
+            top: 20px;
+            left: 20px;
+            right: auto; // Reseteamos el right de desktop
+            
+            /* Contador cortito y minimalista */
+            background: rgba(0, 0, 0, 0.7);
+            padding: 0.3rem 0.6rem;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            width: auto;
+            display: inline-block;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* RESPONSIVE HORIZONTAL - MODAL LANDSCAPE (FOTO VERTICAL FORZADA) */
+@media (max-height: 500px) and (orientation: landscape) {
+    .modal {
+        padding: 0.5rem; 
+
+        &__container {
+            display: grid;
+            /* Le damos el 70% al texto y solo el 30% a la foto 
+               para que el contenedor de la derecha sea un rectángulo parado */
+            grid-template-columns: 1fr 300px; 
+            height: 95vh;
+            max-width: 900px; // No dejamos que se estire infinito a lo ancho
+            overflow: visible; 
+
+            @media (max-width: 700px) {
+                grid-template-columns: 1fr 220px; // Más estrecho aún en teléfonos chicos
+            }
+        }
+
+        &__close {
+            top: -10px; // Si hay espacio, lo volvemos a sacar un poquito
+            right: -10px;
+            width: 35px;
+            height: 35px;
+            font-size: 0.9rem;
+        }
+
+        &__info {
+            position: static; 
+            padding: 2rem 3rem;
+            background: v.$night-900;
+            overflow-y: auto; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            h2 {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+                line-height: 1.4;
+                max-width: 500px; // Evita líneas de texto eternas
+            }
+        }
+
+        &__carousel {
+            height: 100%;
+            background: #000;
+            
+            #modal-gallery img {
+                /* Con el contenedor de 300px, tus fotos verticales 
+                   ahora sí van a brillar sin cortarse */
+                object-fit: cover; 
+            }
+        }
+    }
+
+    .carousel {
+        &__btn {
+            width: 40px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+
+        &__counter {
+            bottom: 10px;
+            right: 10px;
+            top: auto;
+            left: auto;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.6rem;
+        }
+    }
+}

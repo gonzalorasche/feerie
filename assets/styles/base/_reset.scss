@@ -1,0 +1,133 @@
+/* ==========================================================
+   RESET & BASE STYLES — MIAMI BURLESQUE
+========================================================== */
+// assets/styles/base/_reset.scss
+@use 'variables' as v; 
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  // 1rem = 10px
+  font-size: 62.5%; 
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: v.$color-bg-main;
+  color: v.$color-text-main;
+  font-family: v.$font-body;
+  font-weight: v.$weight-light; 
+  font-size: 1.6rem; 
+  line-height: 1.6;
+  padding-top: 0; // <--- CAMBIAR DE 65px A 0
+  overflow-x: hidden;
+}
+
+/* --- Estructura Global (Content Wrapper) --- */
+.container {
+  width: 100%;
+  max-width: v.$container-max; // 1200px
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: v.$container-gutter; // 2rem
+  padding-left: v.$container-gutter;  // 2rem
+
+  @media (max-width: 768px) {
+    padding-right: v.$container-gutter-mobile; // 1.5rem
+    padding-left: v.$container-gutter-mobile;
+  }
+}
+
+/* --- Títulos --- */
+h1, h2, h3, h4 {
+  font-family: v.$font-titles;
+  font-weight: v.$weight-titles;
+  line-height: 1.1;
+  color: v.$color-text-strong;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+}
+
+h1 { font-size: v.$fs-h1; }
+h2 { font-size: v.$fs-h2; }
+h3 { font-size: v.$fs-h3; }
+
+/* --- Enlaces y Botones --- */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+button, .btn {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background-color: v.$button-bg;
+  color: v.$button-text;
+  font-family: v.$button-font;
+  font-weight: v.$button-weight;
+  font-size: v.$fs-small;
+  letter-spacing: v.$button-letter-spacing;
+  padding: 1.5rem 3.5rem;
+  text-transform: uppercase;
+  border: v.$button-border;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  z-index: 1;
+
+  &:hover {
+    background-color: v.$color-accent-main; 
+    color: v.$night-900;
+    transform: translateY(-2px);
+    box-shadow: v.$shadow-glow;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* --- Elementos de Acento --- */
+em, i, .accent-text {
+  font-family: v.$font-accent;
+  font-style: italic;
+  font-weight: v.$weight-medium;
+  color: v.$color-accent-main;
+  text-transform: none;
+}
+
+strong {
+  font-weight: v.$weight-bold;
+  color: v.$color-text-strong;
+}
+
+/* --- Imágenes --- */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* --- Utilidades --- */
+.text-gold { color: v.$color-accent-vip; }
+.text-center { text-align: center; }
+
+// Utilidad para espaciado vertical de secciones
+.section-padding {
+  padding-top: v.$section-padding;
+  padding-bottom: v.$section-padding;
+
+  @media (max-width: 768px) {
+    padding-top: v.$section-padding-mobile;
+    padding-bottom: v.$section-padding-mobile;
+  }
+}

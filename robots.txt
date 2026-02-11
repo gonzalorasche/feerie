@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Evitar que se indexen archivos de sistema o carpetas vacías si las hubiera
+Disallow: /assets/styles/
+Disallow: /send_mail.php
+
+# Ruta del Sitemap
+Sitemap: https://www.feerieshows.com/sitemap.xml
