@@ -1138,33 +1138,27 @@ img {
   }
 }
 .about {
-  padding: 15rem 0;
   background-color: #0a0104;
   position: relative;
   overflow: hidden;
-  /* Elemento decorativo de fondo: Texto gigante sutil */
 }
 .about::before {
-  content: "EST. 2026";
+  content: "";
   position: absolute;
-  top: 50%;
-  left: -5%;
-  transform: translateY(-50%) rotate(-90deg);
-  font-family: "Public Sans", sans-serif;
-  font-weight: 700;
-  font-size: 15rem;
-  color: rgba(245, 245, 244, 0.02);
+  top: -20%;
+  left: 0;
+  width: 100%;
+  height: 150%;
+  background: radial-gradient(ellipse at 30% 0%, rgba(246, 198, 210, 0.08) 0%, rgba(182, 124, 129, 0.04) 25%, rgba(10, 1, 4, 0) 60%);
   pointer-events: none;
-  white-space: nowrap;
+  z-index: 0;
 }
 .about__container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 3rem;
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 8rem;
+  gap: 12rem;
   align-items: center;
 }
 @media (max-width: 900px) {
@@ -1173,193 +1167,236 @@ img {
     gap: 6rem;
   }
 }
-.about__content {
-  position: relative;
-  z-index: 2;
-}
 .about__content .pre-title {
-  font-family: "Public Sans", sans-serif;
+  font-family: "Spectral", serif;
   color: #f6c6d2;
-  text-transform: uppercase;
-  letter-spacing: 0.6em;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 3rem;
-}
-.about__content .pre-title::after {
-  content: "";
-  width: 50px;
-  height: 1px;
-  background: #f6c6d2;
+  font-size: 1.6rem;
+  font-style: italic;
+  margin-bottom: 2rem;
+  display: block;
+  text-transform: none;
 }
 .about__content h2 {
-  font-family: "Public Sans", sans-serif;
-  font-weight: 700;
-  font-size: clamp(3.5rem, 7vw, 6rem);
-  color: #f5f5f4;
-  line-height: 0.85;
-  text-transform: uppercase;
+  font-family: "Syne", sans-serif;
+  font-weight: 400;
+  font-size: clamp(3.5rem, 6vw, 6rem);
+  line-height: 1.1;
   margin-bottom: 4rem;
-  /* Efecto de palabra destacada */
+  color: #f5f5f4;
+  text-transform: none;
+  letter-spacing: -0.01em;
 }
 .about__content h2 .highlight-text {
   display: block;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(245, 245, 244, 0.3);
-  font-size: 1.2em;
-  margin-left: -2px;
+  font-family: "Spectral", serif;
+  font-style: italic;
+  color: #b67c81;
+  font-size: 0.9em;
+  margin-top: 0.5rem;
 }
 .about__content .description {
+  max-width: 460px;
   position: relative;
-  padding-left: 3rem;
-  border-left: 1px solid rgba(246, 198, 210, 0.3);
 }
 .about__content .description p {
   font-family: "Public Sans", sans-serif;
-  font-size: 1.2rem;
-  line-height: 1.8;
+  font-weight: 300;
   color: #d6ccc2;
+  font-size: 1.1rem;
+  line-height: 1.7;
   margin-bottom: 2rem;
 }
 .about__content .description p.highlight {
+  font-family: "Public Sans", sans-serif;
+  font-size: 1.3rem;
   color: #f5f5f4;
-  font-size: 1.5rem;
-  font-style: italic;
-  margin-bottom: 3rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 2.5rem;
+  padding-left: 2rem;
+  border-left: 1px solid #520e23;
 }
 .about__image {
   position: relative;
-  padding: 2rem;
-  /* Adorno asimétrico detrás de la foto */
+  z-index: 1;
 }
 .about__image-wrapper {
-  position: relative;
-  z-index: 1;
   width: 100%;
   aspect-ratio: 3/4;
   overflow: hidden;
-  /* El marco dorado/pétalo tipo camerino */
-}
-.about__image-wrapper::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid #f6c6d2;
-  z-index: 2;
-  pointer-events: none;
-  margin: 1rem;
-  opacity: 0.5;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
 }
 .about__image-wrapper img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  filter: grayscale(20%) contrast(1.1);
-  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.about__image-wrapper:hover img {
-  transform: scale(1.05);
-}
-.about__image::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #f6c6d2;
-  opacity: 0.05;
-  z-index: 0;
-  transform: rotate(-3deg);
+  filter: brightness(0.9) contrast(1.1);
 }
 .about__image .image-caption {
   position: absolute;
-  bottom: -1rem;
-  right: -1rem;
-  background: #f6c6d2;
-  color: #0a0104;
-  padding: 1.5rem 2rem;
+  top: 2rem;
+  right: -2rem;
+  writing-mode: vertical-rl;
   font-family: "Public Sans", sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
   font-size: 0.7rem;
+  text-transform: uppercase;
   letter-spacing: 0.3em;
-  z-index: 3;
-  transform: rotate(2deg);
+  color: #b67c81;
+  opacity: 0.5;
+}
+@media (max-width: 900px) {
+  .about__image .image-caption {
+    position: static;
+    writing-mode: horizontal-tb;
+    margin-top: 1rem;
+    text-align: right;
+  }
 }
 
-/* ==========================================================================
-   ABOUT - RESPONSIVE HORIZONTAL (Landscape 100vh)
-   ========================================================================== */
-@media (max-height: 550px) and (orientation: landscape) {
+/* ==========================================================
+   ABOUT - RESPONSIVE VERTICAL (Teatral Cinematic Look)
+   ========================================================== */
+@media (max-width: 768px) {
   .about {
     height: 100vh;
-    min-height: 450px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    /* Eliminamos el texto gigante de fondo para limpiar la vista */
-  }
-  .about::before {
-    display: none;
-  }
-  .about__container {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 4rem;
-    align-items: center;
-    height: 90%;
-  }
-  .about__content .pre-title {
-    margin-bottom: 1.5vh;
-    font-size: 0.7rem;
-  }
-  .about__content h2 {
-    font-size: clamp(2rem, 12vh, 3.5rem);
-    margin-bottom: 2vh;
-    line-height: 1;
-  }
-  .about__content .description {
-    padding-left: 2rem;
-  }
-  .about__content .description p {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-    max-width: 90%;
-  }
-  .about__content .description p.highlight {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-  }
-  .about__image {
-    padding: 0;
-    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Ajustamos la etiqueta para que no tape tanto */
-    /* Quitamos el adorno de atrás para no ensuciar el 100vh */
+    background-color: #0a0104;
+    overflow: hidden;
+    position: relative;
+  }
+  .about__container {
+    height: 100%;
+    padding: 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3rem;
+    position: relative;
+    z-index: 2;
+  }
+  .about__image {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    position: relative;
   }
   .about__image-wrapper {
-    height: 100%;
-    width: auto;
-    aspect-ratio: 3/4;
+    aspect-ratio: 1/1;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+    position: relative;
+    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.9);
   }
-  .about__image-wrapper::before {
-    margin: 0.5rem;
+  .about__image-wrapper img {
+    filter: brightness(0.7) contrast(1.2) grayscale(0.3);
+    -o-object-fit: cover;
+       object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .about__image-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.15;
+    pointer-events: none;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    mix-blend-mode: overlay;
+  }
+  .about__content {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .about__content .pre-title {
+    font-family: "Spectral", serif;
+    color: #f6c6d2;
+    font-size: 1.6rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+  .about__content h2 {
+    font-family: "Syne", sans-serif;
+    font-weight: 400;
+    font-size: 2.8rem;
+    line-height: 1.1;
+    margin-bottom: 5rem;
+    text-transform: none;
+  }
+  .about__content h2 .highlight-text {
+    display: block;
+    font-size: 0.9em;
+    color: #b67c81;
+    margin-top: 0.8rem;
+  }
+  .about__content .description p {
+    font-family: "Public Sans", sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #d6ccc2;
+    margin-bottom: 1.8rem;
+  }
+  .about__content .description p.highlight {
+    font-family: "Spectral", serif;
+    font-size: 1.35rem;
+    color: #f5f5f4;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 2.2rem;
+  }
+  .about__content .description p:last-child {
+    margin-bottom: 0;
+  }
+}
+/* ==========================================================
+   ADAPTACIÓN HORIZONTAL (LANDSCAPE MOBILE) 
+   Sin cajas, parecido a escritorio pero compacto.
+   ========================================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .about {
+    padding: 6rem 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+  .about__container {
+    gap: 6rem;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+  .about__content h2 {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+    color: #f5f5f4;
+  }
+  .about__content h2 .highlight-text {
+    display: inline;
+    margin-left: 1rem;
+    color: #b67c81;
+    -webkit-text-stroke: 0;
+  }
+  .about__content .description p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+  }
+  .about__content .description p.highlight {
+    font-size: 1.2rem;
+    margin-bottom: 1.8rem;
+  }
+  .about__image-wrapper {
+    aspect-ratio: 4/3;
+    max-height: 350px;
+    margin: 0 auto;
   }
   .about__image .image-caption {
-    padding: 0.8rem 1.2rem;
-    font-size: 0.6rem;
-    bottom: 0;
-    right: 0;
-  }
-  .about__image::after {
     display: none;
   }
 }
