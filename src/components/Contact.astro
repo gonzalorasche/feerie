@@ -1,0 +1,205 @@
+---
+const EMAIL = 'feerieshows@feerie.com';
+const PHONE_DISPLAY = '(786) 252 9292';
+const PHONE_TEL = '+17862529292';
+
+const plans = [
+  { label: 'A Wedding', subject: 'Wedding entertainment inquiry' },
+  { label: 'A Brand Activation', subject: 'Brand activation inquiry' },
+  { label: 'A Corporate Event', subject: 'Corporate event inquiry' },
+  { label: 'A Nightlife Show', subject: 'Nightlife show inquiry' },
+  { label: 'A Private Party', subject: 'Private party inquiry' },
+].map((p) => {
+  const body =
+    'Hi Féerie,\n\n' +
+    "I'm planning " +
+    p.label.toLowerCase() +
+    ' in Miami and would love to talk about entertainment for it.\n\n' +
+    'Date:\nVenue:\nGuests:\n';
+  const href =
+    'mailto:' + EMAIL + '?subject=' + encodeURIComponent(p.subject) + '&body=' + encodeURIComponent(body);
+  return { ...p, href };
+});
+
+const whatsapp =
+  'https://wa.me/17862529292?text=' +
+  encodeURIComponent("Hi Féerie! I'd like to talk about entertainment for my event.");
+---
+
+<section id="contact" class="relative overflow-hidden bg-ink py-20 lg:py-28">
+  <div class="absolute inset-0" aria-hidden="true">
+    <video
+      class="ct-video h-full w-full object-cover opacity-30"
+      muted
+      loop
+      playsinline
+      preload="none"
+      poster="/videos/flamenco-poster.webp"
+      src="/videos/flamenco-bg.mp4"
+    >
+    </video>
+    <div
+      class="absolute inset-0"
+      style="background:linear-gradient(180deg,#0B0C11 0%,rgba(11,12,17,.42) 26%,rgba(11,12,17,.42) 74%,#0B0C11 100%),radial-gradient(55% 65% at 85% 15%,rgba(232,72,110,.06),transparent 70%)"
+    >
+    </div>
+  </div>
+
+  <div class="relative grid gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_1.15fr] lg:gap-20 lg:px-12">
+    <div class="flex flex-col gap-5">
+      <p class="eyebrow">Contact</p>
+      <h2 class="max-w-[18ch] text-[clamp(1.9rem,4.6vw,3.4rem)] leading-[1.02] text-bone">
+        Let&rsquo;s plan something <em class="not-italic text-rose-soft">unforgettable</em>
+      </h2>
+      <p class="max-w-[38ch] text-sm leading-relaxed text-dim lg:text-base">
+        Tell us what you&rsquo;re dreaming of. We answer fast.
+      </p>
+
+      <div class="mt-4 flex flex-col gap-3.5">
+        <p class="text-[0.68rem] font-medium tracking-[0.24em] text-dim uppercase">
+          What are you planning?
+        </p>
+        <div class="flex flex-wrap gap-2.5">
+          {
+            plans.map((p) => (
+              <a
+                href={p.href}
+                data-touch
+                class="cursor-pointer rounded-full border border-line px-4 py-2 text-[0.78rem] font-medium tracking-wide text-bone transition-all duration-300 hover:border-rose hover:bg-rose hover:text-[#120507]"
+              >
+                {p.label}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col lg:self-center">
+      <button
+        type="button"
+        data-touch
+        data-copy={EMAIL}
+        data-fallback={`mailto:${EMAIL}`}
+        class="ct-row group flex cursor-pointer items-center justify-between gap-6 border-t border-line py-5 text-left lg:py-6"
+      >
+        <span class="flex min-w-0 flex-col gap-1">
+          <span class="text-[0.62rem] font-medium tracking-[0.2em] text-dim uppercase">
+            Email <span class="cp-note ml-2 normal-case tracking-normal text-rose">Copied!</span>
+          </span>
+          <span class="truncate font-display text-[clamp(1.15rem,2.4vw,1.6rem)] font-bold tracking-tight text-bone transition-colors duration-300 group-hover:text-rose-soft">
+            {EMAIL}
+          </span>
+        </span>
+        <span
+          class="card-orb flex size-10 shrink-0 items-center justify-center rounded-full border border-rose text-rose transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:bg-rose group-hover:text-[#120507] lg:size-11"
+          aria-hidden="true"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <rect x="5.5" y="5.5" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.5" />
+            <path d="M10.5 3.5V3a2 2 0 0 0-2-2h-5a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h.5" stroke="currentColor" stroke-width="1.5" />
+          </svg>
+        </span>
+      </button>
+
+      <button
+        type="button"
+        data-touch
+        data-copy={PHONE_DISPLAY}
+        data-fallback={`tel:${PHONE_TEL}`}
+        class="ct-row group flex cursor-pointer items-center justify-between gap-6 border-t border-line py-5 text-left lg:py-6"
+      >
+        <span class="flex min-w-0 flex-col gap-1">
+          <span class="text-[0.62rem] font-medium tracking-[0.2em] text-dim uppercase">
+            Phone <span class="cp-note ml-2 normal-case tracking-normal text-rose">Copied!</span>
+          </span>
+          <span class="truncate font-display text-[clamp(1.15rem,2.4vw,1.6rem)] font-bold tracking-tight text-bone transition-colors duration-300 group-hover:text-rose-soft">
+            {PHONE_DISPLAY}
+          </span>
+        </span>
+        <span
+          class="card-orb flex size-10 shrink-0 items-center justify-center rounded-full border border-rose text-rose transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:bg-rose group-hover:text-[#120507] lg:size-11"
+          aria-hidden="true"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <rect x="5.5" y="5.5" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.5" />
+            <path d="M10.5 3.5V3a2 2 0 0 0-2-2h-5a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h.5" stroke="currentColor" stroke-width="1.5" />
+          </svg>
+        </span>
+      </button>
+
+      <a
+        href={whatsapp}
+        target="_blank"
+        rel="noopener"
+        data-touch
+        class="ct-row group flex cursor-pointer items-center justify-between gap-6 border-t border-line py-5 lg:py-6"
+      >
+        <span class="flex min-w-0 flex-col gap-1">
+          <span class="text-[0.62rem] font-medium tracking-[0.2em] text-dim uppercase">WhatsApp</span>
+          <span class="truncate font-display text-[clamp(1.15rem,2.4vw,1.6rem)] font-bold tracking-tight text-bone transition-colors duration-300 group-hover:text-rose-soft">
+            Start a chat
+          </span>
+        </span>
+        <span
+          class="card-orb flex size-10 shrink-0 items-center justify-center rounded-full border border-rose text-rose transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:rotate-45 group-hover:bg-rose group-hover:text-[#120507] lg:size-11"
+          aria-hidden="true"
+        >
+          &rarr;
+        </span>
+      </a>
+
+      <a
+        href="https://www.instagram.com/feerieshows"
+        target="_blank"
+        rel="noopener"
+        data-touch
+        class="ct-row group flex cursor-pointer items-center justify-between gap-6 border-y border-line py-5 lg:py-6"
+      >
+        <span class="flex min-w-0 flex-col gap-1">
+          <span class="text-[0.62rem] font-medium tracking-[0.2em] text-dim uppercase">Instagram</span>
+          <span class="truncate font-display text-[clamp(1.15rem,2.4vw,1.6rem)] font-bold tracking-tight text-bone transition-colors duration-300 group-hover:text-rose-soft">
+            @feerieshows
+          </span>
+        </span>
+        <span
+          class="card-orb flex size-10 shrink-0 items-center justify-center rounded-full border border-rose text-rose transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:rotate-45 group-hover:bg-rose group-hover:text-[#120507] lg:size-11"
+          aria-hidden="true"
+        >
+          &rarr;
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Video de fondo: solo reproduce mientras la sección está a la vista
+  const video = document.querySelector<HTMLVideoElement>('.ct-video');
+  if (video && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(video);
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.ct-row[data-copy]').forEach((btn) => {
+    const note = btn.querySelector<HTMLElement>('.cp-note');
+    let timer: ReturnType<typeof setTimeout>;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy || '');
+        note?.classList.add('is-on');
+        clearTimeout(timer);
+        timer = setTimeout(() => note?.classList.remove('is-on'), 1800);
+      } catch {
+        // Clipboard no disponible (http en LAN): abrimos mailto/tel directo
+        if (btn.dataset.fallback) window.location.href = btn.dataset.fallback;
+      }
+    });
+  });
+</script>

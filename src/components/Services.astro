@@ -1,0 +1,123 @@
+---
+import { Image } from 'astro:assets';
+import { imagesFor } from '../data/performances';
+
+const services = [
+  {
+    name: 'Performances',
+    anchor: '#performances',
+    image: imagesFor('vintage')[0],
+    description:
+      'Fully produced live shows with professional dancers, from burlesque to fire. Cast, music and staging tailored to your event, ready to light up any venue in Miami.',
+  },
+  {
+    name: 'Costume Design',
+    image: imagesFor('greeters')[0],
+    description:
+      'Féerie designs and crafts its own costumes, and keeps an unmatched wardrobe of sophisticated pieces available for rent, from feathered classics to couture made for your theme.',
+  },
+  {
+    name: 'Choreography',
+    image: imagesFor('flamenco')[2],
+    description:
+      'Original choreography for events that need movement with intention: openings, reveals, first dances and branded moments, staged and rehearsed to perfection.',
+  },
+  {
+    name: 'Creative Direction',
+    image: imagesFor('ambient-performances')[2],
+    description:
+      'Full artistic direction for events designed from zero. Concept, ambiance, costumes and performance curation working together until the whole night breathes one atmosphere.',
+  },
+];
+---
+
+<section id="services" class="bg-ink py-20 lg:py-28">
+  <header class="mb-10 flex flex-col gap-4 px-5 sm:px-8 lg:mb-12 lg:px-12">
+    <p class="eyebrow">What We Do</p>
+    <h2 class="max-w-[24ch] text-[clamp(1.9rem,4.6vw,3.4rem)] leading-[1.02] text-bone">
+      The craft behind the <em class="not-italic text-rose-soft">spectacle</em>
+    </h2>
+  </header>
+
+  <div class="flex flex-col gap-4 px-5 sm:px-8 lg:h-[66vh] lg:flex-row lg:gap-5 lg:px-12">
+    {
+      services.map((s, i) => (
+        <div
+          tabindex="0"
+          data-touch
+          style={`--i:${i}`}
+          class="sv-panel group relative cursor-pointer overflow-hidden rounded-3xl border border-bone/10 bg-card transition-[flex-grow] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] max-lg:min-h-[42svh] lg:flex-[1_1_0%] lg:hover:flex-[2.1_1_0%] lg:focus-within:flex-[2.1_1_0%] "
+        >
+          <Image
+            src={s.image}
+            alt={`${s.name} by Féerie in Miami`}
+            width={900}
+            class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-105 card-zoom"
+            loading="lazy"
+            draggable="false"
+          />
+          <div
+            class="absolute inset-0"
+            style="background:linear-gradient(0deg,#0B0C11 0%,#0B0C11 10%,rgba(11,12,17,.86) 34%,rgba(11,12,17,.34) 58%,rgba(11,12,17,.1) 78%),linear-gradient(90deg,rgba(11,12,17,.5) 0%,rgba(11,12,17,0) 16%),linear-gradient(270deg,rgba(11,12,17,.5) 0%,rgba(11,12,17,0) 16%),linear-gradient(180deg,rgba(11,12,17,.35) 0%,rgba(11,12,17,0) 18%)"
+            aria-hidden="true"
+          />
+          <div class="absolute inset-x-0 bottom-0 flex flex-col p-6 lg:p-7">
+            <h3 class="text-[clamp(1.35rem,1.9vw,1.7rem)] leading-none whitespace-nowrap text-bone">
+              {s.name}
+            </h3>
+            <div class="sv-reveal grid grid-rows-[1fr] transition-[grid-template-rows] duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] lg:grid-rows-[0fr] lg:group-hover:grid-rows-[1fr] lg:group-focus-within:grid-rows-[1fr]">
+              <div class="overflow-hidden">
+                <p class="max-w-[52ch] pt-2.5 text-[0.85rem] leading-relaxed text-bone/85 [text-shadow:0_1px_12px_rgba(11,12,17,0.9)] sv-desc transition-opacity duration-500 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-within:opacity-100">
+                  {s.description}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="sv-shade pointer-events-none absolute inset-0 bg-ink opacity-0"
+            aria-hidden="true"
+          />
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // En pantallas táctiles el panel se abre y cierra con un tap (uno abierto a la vez).
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('.sv-panel'));
+  panels.forEach((panel) => {
+    panel.addEventListener('click', () => {
+      const wasOpen = panel.classList.contains('is-open');
+      panels.forEach((p) => p.classList.remove('is-open'));
+      if (!wasOpen) panel.classList.add('is-open');
+    });
+  });
+
+  // Mobile: las cards se apilan con sticky. La de abajo se hunde solo mientras
+  // la siguiente la está tapando de verdad (de su borde inferior a cubrirla), nunca antes.
+  const mm = gsap.matchMedia();
+  mm.add('(max-width: 1023px) and (prefers-reduced-motion: no-preference)', () => {
+    panels.forEach((panel, i) => {
+      const next = panels[i + 1];
+      if (!next) return;
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: next,
+          start: () =>
+            `top ${parseFloat(getComputedStyle(panel).top) + panel.offsetHeight}`,
+          end: () => `top ${parseFloat(getComputedStyle(next).top)}`,
+          scrub: 0.4,
+          invalidateOnRefresh: true,
+        },
+      });
+      tl.to(panel, { scale: 0.95, transformOrigin: 'center top', ease: 'none' }, 0);
+      tl.to(panel.querySelector('.sv-shade'), { opacity: 0.3, ease: 'none' }, 0);
+    });
+  });
+</script>

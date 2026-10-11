@@ -1,0 +1,80 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Féerie | Luxury Entertainment Production in Miami',
+  description =
+    'Féerie is a Miami based entertainment production company creating burlesque, flamenco, fire and vintage shows for weddings, brand activations, corporate and private events.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0B0C11" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700&f[]=author@300,400,500,600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+    <script>
+      // Smooth scroll (Lenis) integrado con GSAP ScrollTrigger. En touch queda nativo.
+      import Lenis from 'lenis';
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const lenis = new Lenis({
+          anchors: true,
+          duration: 1.35,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+        (window as Window & { lenis?: Lenis }).lenis = lenis;
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+      }
+    </script>
+    <script>
+      // En touch no hay hover: el roce dispara el estado al instante.
+      document.addEventListener(
+        'touchstart',
+        (e) => {
+          const el = (e.target as Element).closest?.('.btn, [data-touch]');
+          if (el) el.classList.add('is-touched');
+        },
+        { passive: true }
+      );
+      for (const ev of ['touchend', 'touchcancel'] as const) {
+        document.addEventListener(
+          ev,
+          () => {
+            document.querySelectorAll('.is-touched').forEach((el) => {
+              setTimeout(() => el.classList.remove('is-touched'), 280);
+            });
+          },
+          { passive: true }
+        );
+      }
+    </script>
+  </body>
+</html>

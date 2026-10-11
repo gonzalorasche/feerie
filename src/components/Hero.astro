@@ -1,0 +1,297 @@
+---
+import { getImage, Image } from 'astro:assets';
+import logoWhite from '../assets/logo-feerie-white.png';
+import hero1 from '../assets/hero/hero1.webp';
+import hero2 from '../assets/hero/hero2.webp';
+import hero3 from '../assets/hero/hero3.webp';
+import heroM1 from '../assets/hero/heroresp1.webp';
+import heroM2 from '../assets/hero/heroresp2.webp';
+import heroM3 from '../assets/hero/heroresp3.webp';
+
+const desktopSrcs = [hero1, hero2, hero3];
+const mobileSrcs = [heroM1, heroM2, heroM3];
+
+const desktop = await Promise.all(
+  desktopSrcs.map((src) => getImage({ src, width: 1920, format: 'webp', quality: 78 }))
+);
+const mobile = await Promise.all(
+  mobileSrcs.map((src) => getImage({ src, width: 1080, format: 'webp', quality: 78 }))
+);
+
+const slides = desktop.map((d, i) => ({ desktop: d.src, mobile: mobile[i].src }));
+
+const performances = [
+  'Burlesque',
+  'Firebelly Dance',
+  'Flamenco',
+  'Greeters',
+  'Vintage',
+  'Ambient Performances',
+];
+---
+
+<section class="hero relative h-[100svh] min-h-[600px] overflow-hidden bg-ink" aria-label="Féerie, luxury entertainment production in Miami">
+  <!-- slides (isolate: los z-index de las fotos quedan confinados acá adentro, siempre debajo de los velos) -->
+  <div class="absolute inset-0 isolate z-0" aria-hidden="true">
+    {
+      slides.map((s, i) => (
+        <picture
+          class="hero-slide absolute inset-0 block"
+          data-index={i}
+          style={i === 0 ? '' : 'visibility:hidden'}
+        >
+          <source media="(orientation: portrait)" srcset={s.mobile} />
+          <img
+            src={s.desktop}
+            alt=""
+            class="absolute inset-0 h-full w-full object-cover will-change-transform"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            decoding={i === 0 ? 'sync' : 'async'}
+          />
+        </picture>
+      ))
+    }
+    <span class="wipe-line absolute inset-y-0 left-0 w-px bg-rose-soft/70 opacity-0"></span>
+  </div>
+
+  <!-- velos: difuminado a negro hacia la izquierda en apaisado, y desde donde arranca el texto hacia abajo en vertical -->
+  <div class="absolute inset-0 portrait:block landscape:hidden" style="background:linear-gradient(0deg,#0B0C11 0%,#0B0C11 7%,rgba(11,12,17,.96) 22%,rgba(11,12,17,.78) 40%,rgba(11,12,17,.35) 56%,rgba(11,12,17,0) 70%)" aria-hidden="true"></div>
+  <div class="absolute inset-0 hidden landscape:block" style="background:linear-gradient(90deg,#0B0C11 0%,rgba(11,12,17,.9) 26%,rgba(11,12,17,.55) 48%,rgba(11,12,17,.18) 66%,rgba(11,12,17,0) 82%)" aria-hidden="true"></div>
+  <div class="absolute inset-x-0 top-0 h-32" style="background:linear-gradient(180deg,rgba(11,12,17,.55),transparent)" aria-hidden="true"></div>
+  <div class="absolute inset-0" style="background:radial-gradient(44% 70% at 22% 48%,rgba(232,72,110,.13),transparent 72%)" aria-hidden="true"></div>
+  <div class="grain absolute inset-0" aria-hidden="true"></div>
+
+  <!-- logo, parte del montaje del hero -->
+  <a href="/" aria-label="Féerie" class="absolute top-5 left-5 z-10 block sm:top-6 sm:left-8 lg:left-12">
+    <Image
+      src={logoWhite}
+      alt="Féerie"
+      class="hero-logo h-11 w-auto opacity-0 sm:h-14 lg:h-16"
+      loading="eager"
+      densities={[1, 2]}
+    />
+  </a>
+
+  <!-- content -->
+  <div class="relative z-10 flex h-full flex-col justify-end px-5 pb-32 sm:px-8 lg:justify-center lg:px-12 lg:pb-0">
+    <div class="hero-copy flex max-w-[780px] flex-col items-start gap-5 lg:gap-6">
+      <p class="hero-eyebrow eyebrow rounded-full border border-bone/20 bg-bone/15 px-4 py-2 text-bone opacity-0 backdrop-blur-md">
+        Miami
+      </p>
+      <h1 class="hero-title text-[clamp(2.4rem,6.2vw,4.4rem)] leading-[1.02] text-bone">
+        An evening that <em class="not-italic text-rose-soft">never</em> ends at midnight
+      </h1>
+      <p class="hero-sub max-w-[52ch] text-[0.98rem] leading-relaxed text-bone/90 opacity-0 max-lg:[text-shadow:0_1px_14px_rgba(11,12,17,0.9)] sm:text-base lg:text-dim">
+        Luxury entertainment production in Miami: live shows, professional dancers and custom
+        costumes for weddings, corporate events, brand activations, nightlife and private parties.
+      </p>
+      <div class="hero-ctas mt-2 flex flex-wrap gap-3 opacity-0">
+        <a href="#services" class="btn btn-fill">Explore Services</a>
+        <a href="#contact" class="btn btn-ghost">Let&rsquo;s Work Together</a>
+      </div>
+    </div>
+
+    <!-- slide progress, sin números -->
+    <div class="hero-progress absolute bottom-[4.6rem] left-5 flex gap-2 opacity-0 sm:left-8 lg:left-12" aria-hidden="true">
+      {
+        slides.map(() => (
+          <span class="block h-0.5 w-7 overflow-hidden rounded-full bg-bone/20">
+            <i class="block h-full w-0 bg-rose-soft" />
+          </span>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- ticker -->
+  <a
+    href="#performances"
+    class="group absolute inset-x-0 bottom-0 z-10 block border-t border-line bg-ink/30 backdrop-blur-md"
+    aria-label="Now showing: our performances"
+  >
+    <div class="marquee flex w-max items-center py-3.5 text-[0.62rem] tracking-[0.24em] text-dim uppercase will-change-transform">
+      <span class="marquee-group flex items-center gap-10 pr-10" aria-hidden="true">
+        <span class="text-rose-soft">Now Showing</span>
+        {performances.map((p) => (
+          <span class="transition-colors duration-300 group-hover:text-bone">{p}</span>
+        ))}
+      </span>
+    </div>
+  </a>
+</section>
+
+<script>
+  import gsap from 'gsap';
+  import { SplitText } from 'gsap/SplitText';
+
+  gsap.registerPlugin(SplitText);
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const slides = Array.from(document.querySelectorAll<HTMLElement>('.hero-slide'));
+  const bars = Array.from(document.querySelectorAll<HTMLElement>('.hero-progress i'));
+  const wipeLine = document.querySelector<HTMLElement>('.wipe-line');
+  const HOLD = 6.5;
+  let current = 0;
+  let cycleTween: gsap.core.Tween | null = null;
+
+  function kenburns(slide: HTMLElement) {
+    const img = slide.querySelector('img');
+    if (!img || reduced) return;
+    gsap.fromTo(img, { scale: 1.07 }, { scale: 1, duration: HOLD + 2, ease: 'none', overwrite: true });
+  }
+
+  function fillBar(i: number) {
+    bars.forEach((b, j) => {
+      gsap.killTweensOf(b);
+      if (j === i) {
+        gsap.fromTo(b, { width: '0%' }, { width: '100%', duration: HOLD, ease: 'none' });
+      } else {
+        gsap.set(b, { width: j < i ? '100%' : '0%' });
+      }
+    });
+  }
+
+  function goTo(next: number) {
+    const incoming = slides[next];
+    const outgoing = slides[current];
+    incoming.style.visibility = 'visible';
+    incoming.style.zIndex = '2';
+    outgoing.style.zIndex = '1';
+    kenburns(incoming);
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        outgoing.style.visibility = 'hidden';
+        incoming.style.zIndex = '1';
+        current = next;
+        schedule();
+      },
+    });
+
+    if (reduced) {
+      tl.fromTo(incoming, { opacity: 0 }, { opacity: 1, duration: 0.01 });
+    } else {
+      tl.fromTo(
+        incoming,
+        { clipPath: 'inset(0 100% 0 0)' },
+        { clipPath: 'inset(0 0% 0 0)', duration: 1.15, ease: 'power3.inOut' },
+        0
+      );
+      if (wipeLine) {
+        tl.fromTo(
+          wipeLine,
+          { left: '0%', opacity: 1 },
+          { left: '100%', duration: 1.15, ease: 'power3.inOut' },
+          0
+        ).to(wipeLine, { opacity: 0, duration: 0.2 }, '-=0.15');
+      }
+    }
+    fillBar(next);
+  }
+
+  function schedule() {
+    cycleTween = gsap.delayedCall(HOLD, () => goTo((current + 1) % slides.length)) as unknown as gsap.core.Tween;
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cycleTween?.pause();
+    else cycleTween?.resume();
+  });
+
+  // intro
+  async function intro() {
+    // Espera las fuentes, pero nunca más de 1.2s: el hero no se queda en negro.
+    await Promise.race([
+      (document as Document & { fonts: FontFaceSet }).fonts.ready,
+      new Promise((r) => setTimeout(r, 1200)),
+    ]);
+    // Si la página abrió en una pestaña de fondo, la entrada espera a que la vean.
+    if (document.hidden) {
+      await new Promise<void>((resolve) => {
+        document.addEventListener(
+          'visibilitychange',
+          () => {
+            if (!document.hidden) resolve();
+          },
+          { once: false }
+        );
+      });
+    }
+    const title = document.querySelector('.hero-title');
+    if (!title) return;
+
+    if (reduced) {
+      gsap.set(['.hero-logo', '.hero-eyebrow', '.hero-sub', '.hero-ctas', '.hero-progress'], { opacity: 1 });
+      fillBar(0);
+      schedule();
+      return;
+    }
+
+    const split = SplitText.create(title, { type: 'lines,words', mask: 'lines' });
+    gsap.set(title, { opacity: 1 });
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.to('.hero-logo', { opacity: 1, duration: 0.8 }, 0.05)
+      .from(split.words, { yPercent: 115, duration: 0.9, stagger: 0.05 }, 0.15)
+      .to('.hero-eyebrow', { opacity: 1, duration: 0.7 }, 0.3)
+      .fromTo('.hero-sub', { y: 18 }, { y: 0, opacity: 1, duration: 0.7 }, 0.55)
+      .fromTo('.hero-ctas', { y: 18 }, { y: 0, opacity: 1, duration: 0.7 }, 0.7)
+      .to('.hero-progress', { opacity: 1, duration: 0.5 }, 0.9);
+
+    kenburns(slides[0]);
+    fillBar(0);
+    schedule();
+  }
+
+  intro();
+
+  // Marquesina infinita real: clona el grupo hasta cubrir el ancho y envuelve por módulo.
+  function marquee() {
+    const track = document.querySelector<HTMLElement>('.marquee');
+    const group = document.querySelector<HTMLElement>('.marquee-group');
+    if (!track || !group || reduced) return;
+
+    const SPEED = 55; // px por segundo
+
+    let groupWidth = 0;
+    let x = 0;
+    let paused = false;
+
+    function build() {
+      track!.querySelectorAll('.marquee-clone').forEach((c) => c.remove());
+      groupWidth = group!.getBoundingClientRect().width;
+      if (!groupWidth) return;
+      const needed = Math.ceil((window.innerWidth * 2) / groupWidth) + 1;
+      for (let i = 0; i < needed; i++) {
+        const clone = group!.cloneNode(true) as HTMLElement;
+        clone.classList.add('marquee-clone');
+        clone.setAttribute('aria-hidden', 'true');
+        track!.appendChild(clone);
+      }
+    }
+
+    build();
+
+    gsap.ticker.add((_time, deltaTime) => {
+      if (paused || !groupWidth) return;
+      x -= (SPEED * deltaTime) / 1000;
+      if (x <= -groupWidth) x += groupWidth;
+      track!.style.transform = `translate3d(${x}px,0,0)`;
+    });
+
+    const host = track.closest('a');
+    if (host && window.matchMedia('(hover: hover)').matches) {
+      host.addEventListener('pointerenter', () => (paused = true));
+      host.addEventListener('pointerleave', () => (paused = false));
+    }
+
+    let resizeRaf = 0;
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(build);
+    });
+    (document as Document & { fonts: FontFaceSet }).fonts.ready.then(build);
+  }
+
+  marquee();
+</script>

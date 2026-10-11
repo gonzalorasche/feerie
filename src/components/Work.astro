@@ -1,0 +1,131 @@
+---
+import { Image } from 'astro:assets';
+import { events, eventPhotos } from '../data/events';
+
+const items = events.map((e) => ({ ...e, photos: eventPhotos(e.slug) }));
+---
+
+<section id="work" class="bg-ink py-20 lg:py-28">
+  <header class="mb-10 flex flex-col gap-4 px-5 sm:px-8 lg:mb-12 lg:px-12">
+    <p class="eyebrow">Our Work</p>
+    <h2 class="max-w-[20ch] text-[clamp(1.9rem,4.6vw,3.4rem)] leading-[1.02] text-bone">
+      Straight from the <em class="not-italic text-rose-soft">dance floor</em>
+    </h2>
+  </header>
+
+  <div class="wk-list px-5 sm:px-8 lg:px-12">
+    {
+      items.map((e) => (
+        <article data-type={e.type} class="wk-row border-t border-line last:border-b">
+          <div
+            tabindex="0"
+            role="button"
+            aria-expanded="false"
+            data-touch
+            class="ev-head group flex cursor-pointer items-center gap-5 py-5 sm:gap-7 lg:gap-10 lg:py-6"
+          >
+            <div class="relative h-24 w-[4.25rem] shrink-0 overflow-hidden rounded-2xl border border-bone/10 bg-card sm:h-28 sm:w-20 lg:h-32 lg:w-24">
+              <Image
+                src={e.photos[0]}
+                alt={`${e.title}, event produced by Féerie in ${e.venue}`}
+                width={300}
+                draggable="false"
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-110 card-zoom"
+                loading="lazy"
+              />
+            </div>
+            <div class="flex min-w-0 flex-1 flex-col gap-1.5">
+              <h3 class="text-[clamp(1.25rem,2.4vw,2rem)] leading-tight text-bone transition-colors duration-300 group-hover:text-rose-soft">
+                {e.title}
+              </h3>
+              <p class="text-sm text-dim">
+                {e.venue} &middot; {e.year}
+              </p>
+              <span class="mt-1 w-fit rounded-full border border-line px-2.5 py-1 text-[0.62rem] font-medium tracking-[0.18em] text-rose-soft uppercase lg:hidden">
+                {e.type}
+              </span>
+            </div>
+            <span class="hidden rounded-full border border-line px-3.5 py-1.5 text-[0.65rem] font-medium tracking-[0.18em] text-rose-soft uppercase lg:block">
+              {e.type}
+            </span>
+            <span
+              class="ev-plus flex size-10 shrink-0 items-center justify-center rounded-full border border-rose text-rose transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] lg:size-11"
+              aria-hidden="true"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            </span>
+          </div>
+
+          <div class="ev-reveal grid grid-rows-[0fr] transition-[grid-template-rows] duration-[650ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
+            <div class="overflow-hidden">
+              <div class="ev-viewport cursor-grab overflow-hidden pb-6 active:cursor-grabbing lg:pb-8">
+                <div class="flex touch-pan-y gap-4 lg:gap-5">
+                  {e.photos.map((photo) => (
+                    <div class="relative aspect-[3/4] h-64 shrink-0 overflow-hidden rounded-2xl border border-bone/10 bg-card select-none sm:h-72 lg:h-96">
+                      <Image
+                        src={photo}
+                        alt={`${e.title} by Féerie, ${e.venue} ${e.year}`}
+                        width={620}
+                        draggable="false"
+                        class="absolute inset-0 h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  import EmblaCarousel from 'embla-carousel';
+  import type { EmblaCarouselType } from 'embla-carousel';
+
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('.wk-row'));
+  const emblas = new Map<HTMLElement, EmblaCarouselType>();
+
+  // Galerías arrastrables (el ancho es correcto aun con la fila cerrada)
+  rows.forEach((row) => {
+    const viewport = row.querySelector<HTMLElement>('.ev-viewport');
+    if (viewport) {
+      emblas.set(
+        viewport,
+        EmblaCarousel(viewport, {
+          align: 'start',
+          containScroll: 'trimSnaps',
+          dragFree: true,
+          skipSnaps: true,
+        })
+      );
+    }
+  });
+
+  function setOpen(row: HTMLElement, open: boolean) {
+    row.classList.toggle('is-open', open);
+    row.querySelector('.ev-head')?.setAttribute('aria-expanded', String(open));
+  }
+
+  rows.forEach((row) => {
+    const head = row.querySelector<HTMLElement>('.ev-head');
+    const toggle = () => {
+      const wasOpen = row.classList.contains('is-open');
+      rows.forEach((r) => setOpen(r, false));
+      if (!wasOpen) setOpen(row, true);
+    };
+    head?.addEventListener('click', toggle);
+    head?.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        toggle();
+      }
+    });
+  });
+
+</script>

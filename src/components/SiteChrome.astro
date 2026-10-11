@@ -1,0 +1,206 @@
+---
+import { Image } from 'astro:assets';
+import logoWhite from '../assets/logo-feerie-white.png';
+
+const links = [
+  { href: '#performances', label: 'Performances' },
+  { href: '#services', label: 'Services' },
+  { href: '#mission', label: 'Our Mission' },
+  { href: '#work', label: 'Our Work' },
+  { href: '#alliance', label: 'Global Presence' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header class="fixed inset-x-0 top-0 z-50">
+  <div class="flex items-center justify-end px-5 py-5 sm:px-8 sm:py-6 lg:px-12">
+    <button
+      id="menu-open"
+      type="button"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls="offcanvas"
+      class="group flex min-h-12 cursor-pointer items-center gap-3 rounded-full px-2 py-2 text-[0.68rem] font-medium tracking-[0.24em] text-bone uppercase"
+    >
+      <span>Menu</span>
+      <span class="relative block h-[9px] w-6" aria-hidden="true">
+        <i class="absolute top-0 left-0 block h-px w-full bg-current transition-transform duration-300 group-hover:-translate-y-0.5"></i>
+        <i class="absolute bottom-0 left-0 block h-px w-full bg-current transition-transform duration-300 group-hover:translate-y-0.5"></i>
+      </span>
+    </button>
+  </div>
+</header>
+
+<div
+  id="offcanvas"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Site navigation"
+  class="pointer-events-none fixed inset-0 z-[60]"
+  data-open="false"
+>
+  <div
+    id="offcanvas-backdrop"
+    class="absolute inset-0 bg-black/60 opacity-0 backdrop-blur-sm transition-opacity duration-500 [[data-open=true]_&]:opacity-100"
+  >
+  </div>
+  <nav
+    class="absolute inset-y-0 right-0 flex w-[min(380px,88vw)] translate-x-full flex-col justify-between overflow-y-auto border-l border-line bg-ink px-7 pt-[clamp(4.5rem,12vh,6rem)] pb-[clamp(1.25rem,3.5vh,2.25rem)] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] sm:px-9 [[data-open=true]_&]:translate-x-0"
+  >
+    <div
+      class="pointer-events-none absolute inset-0"
+      style="background:radial-gradient(70% 45% at 90% 0%,rgba(232,72,110,.14),transparent 70%),radial-gradient(50% 35% at 0% 100%,rgba(232,72,110,.06),transparent 70%)"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="grain pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    <a
+      href="/"
+      aria-label="Féerie, back to home"
+      class="nav-link absolute top-7 left-8 block sm:left-10"
+    >
+      <Image src={logoWhite} alt="Féerie" class="h-8 w-auto sm:h-9" densities={[1, 2]} />
+    </a>
+    <button
+      id="menu-close"
+      type="button"
+      class="absolute top-6 right-6 flex size-11 cursor-pointer items-center justify-center rounded-full border border-line text-bone transition-all duration-300 hover:border-rose hover:bg-rose hover:text-[#120507]"
+      aria-label="Close menu"
+    >
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+    </button>
+
+    <div class="relative flex flex-col gap-[clamp(0.75rem,2.2vh,1.4rem)]">
+      <span
+        class="text-[0.62rem] font-medium tracking-[0.28em] text-dim uppercase opacity-0 transition-opacity delay-100 duration-500 [[data-open=true]_&]:opacity-100"
+      >
+        Navigate
+      </span>
+      <ul class="flex flex-col">
+        {
+          links.map((link, i) => (
+            <li
+              class="translate-x-8 opacity-0 transition-all duration-500 [[data-open=true]_&]:translate-x-0 [[data-open=true]_&]:opacity-100"
+              style={`transition-delay: ${100 + i * 50}ms`}
+            >
+              <a
+                href={link.href}
+                class="nav-link group flex items-center justify-between py-[clamp(0.45rem,1.3vh,0.75rem)] font-display text-[clamp(1.1rem,2.8vh,1.4rem)] font-bold tracking-tight text-bone/80 transition-colors duration-300 hover:text-bone"
+              >
+                {link.label}
+                <span
+                  class="-translate-x-2 text-base text-rose opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                  aria-hidden="true"
+                >
+                  &rarr;
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div
+      class="relative mt-[clamp(0.75rem,2.5vh,1.5rem)] flex flex-col gap-[clamp(0.8rem,2vh,1.2rem)] opacity-0 transition-opacity delay-300 duration-500 [[data-open=true]_&]:opacity-100"
+    >
+      <a
+        href="#contact"
+        class="nav-link btn btn-fill w-full justify-center !py-3 text-sm"
+      >
+        Let&rsquo;s Work Together
+      </a>
+      <span class="mt-[clamp(0.25rem,1vh,0.75rem)] text-[0.62rem] font-medium tracking-[0.28em] text-dim uppercase">
+        Get in touch
+      </span>
+      <div class="flex flex-col gap-2 text-sm">
+        <a
+          href="mailto:feerieshows@feerie.com"
+          class="w-fit text-bone/85 transition-colors hover:text-rose"
+        >
+          feerieshows@feerie.com
+        </a>
+        <a href="tel:+17862529292" class="w-fit text-bone/85 transition-colors hover:text-rose">
+          (786) 252 9292
+        </a>
+      </div>
+      <div class="flex items-center gap-5 text-sm text-dim">
+        <a
+          href="https://www.instagram.com/feerieshows"
+          target="_blank"
+          rel="noopener"
+          class="flex items-center gap-2 transition-colors hover:text-rose"
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="1.8" />
+            <circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.8" />
+            <circle cx="17.6" cy="6.4" r="1.3" fill="currentColor" />
+          </svg>
+          @feerieshows
+        </a>
+        <a
+          href="https://www.instagram.com/wepaproducciones"
+          target="_blank"
+          rel="noopener"
+          class="flex items-center gap-2 transition-colors hover:text-rose"
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="1.8" />
+            <circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.8" />
+            <circle cx="17.6" cy="6.4" r="1.3" fill="currentColor" />
+          </svg>
+          @wepaproducciones
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<script>
+  const root = document.getElementById('offcanvas')!;
+  const openBtn = document.getElementById('menu-open')!;
+  const closeBtn = document.getElementById('menu-close')!;
+  const backdrop = document.getElementById('offcanvas-backdrop')!;
+  const main = document.getElementById('page-content');
+  let lastFocus: HTMLElement | null = null;
+
+  function setOpen(open: boolean) {
+    root.dataset.open = String(open);
+    root.classList.toggle('pointer-events-none', !open);
+    openBtn.setAttribute('aria-expanded', String(open));
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    const lenis = (window as Window & { lenis?: { stop: () => void; start: () => void } }).lenis;
+    if (lenis) (open ? lenis.stop : lenis.start).call(lenis);
+    if (main) (main as HTMLElement & { inert: boolean }).inert = open;
+    const footer = document.getElementById('site-footer');
+    if (footer) (footer as HTMLElement & { inert: boolean }).inert = open;
+    if (open) {
+      lastFocus = document.activeElement as HTMLElement;
+      closeBtn.focus();
+    } else {
+      lastFocus?.focus();
+    }
+  }
+
+  openBtn.addEventListener('click', () => setOpen(true));
+  closeBtn.addEventListener('click', () => setOpen(false));
+  backdrop.addEventListener('click', () => setOpen(false));
+  root.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+    if (e.key === 'Tab') {
+      const focusables = root.querySelectorAll<HTMLElement>('a[href], button');
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+  root.querySelectorAll('.nav-link').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+</script>

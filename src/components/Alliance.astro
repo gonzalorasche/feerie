@@ -1,0 +1,143 @@
+---
+import { Image } from 'astro:assets';
+import logoFeerie from '../assets/logo-feerie-white.png';
+import logoWepa from '../assets/logo-wepa-white.png';
+
+const brandNames: Record<string, string> = {
+  abasto_shopping: 'Abasto Shopping',
+  adidas: 'Adidas',
+  aeropuertos: 'Aeropuertos Argentina',
+  alto_palermo: 'Alto Palermo',
+  bacardi: 'Bacardí',
+  budweiser: 'Budweiser',
+  burguer: 'Burger King',
+  distrito_arcos: 'Distrito Arcos',
+  fernet_branca: 'Fernet Branca',
+  fundacion_huesped: 'Fundación Huésped',
+  gob_buenosaires: 'Ciudad de Buenos Aires',
+  hendricks: "Hendrick's",
+  jetsmart: 'JetSMART',
+  jpg: 'Jean Paul Gaultier',
+  paco_rabanne: 'Paco Rabanne',
+  paseo_alcorta: 'Paseo Alcorta',
+  patio_bullrich: 'Patio Bullrich',
+  pepsi: 'Pepsi',
+  sheraton: 'Sheraton',
+};
+
+const logoModules = import.meta.glob<{ default: ImageMetadata }>('../../logos-marcas/*.png', {
+  eager: true,
+});
+const brandLogos = Object.entries(logoModules).map(([path, mod]) => {
+  const slug = path.split('/').pop()!.replace('logo_', '').replace('.png', '');
+  return { image: mod.default, name: brandNames[slug] ?? slug };
+});
+
+// Desktop: tres columnas verticales intercaladas (duración de ciclo por columna)
+const columns: (typeof brandLogos)[] = [[], [], []];
+brandLogos.forEach((b, i) => columns[i % 3].push(b));
+const colDurs = [34, 26, 30];
+
+---
+
+<section id="alliance" class="relative overflow-hidden bg-ink py-20 lg:py-28">
+  <div
+    class="grid gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-[clamp(3rem,6vw,7rem)] lg:px-12"
+  >
+    <div class="flex flex-col gap-6 lg:gap-7">
+      <p class="eyebrow">Global Presence</p>
+      <h2 class="max-w-[18ch] text-[clamp(1.9rem,4.6vw,3.4rem)] leading-[1.02] text-bone">
+        Born in Buenos Aires, made for <em class="not-italic text-rose-soft">Miami</em>
+      </h2>
+      <p class="max-w-[58ch] text-base leading-relaxed text-bone/85 lg:text-lg">
+        Féerie is the Miami chapter of WEPPA Producciones, the Buenos Aires production house behind
+        shows and brand experiences for Adidas, Bacardí, Sheraton and many more. Same team, same
+        obsession with detail, a new stage in the United States.
+      </p>
+      <div class="mt-2 flex items-center gap-7 lg:gap-9">
+        <a
+          href="https://www.instagram.com/feerieshows"
+          target="_blank"
+          rel="noopener"
+          aria-label="Féerie on Instagram"
+          class="transition-opacity duration-300 hover:opacity-70"
+        >
+          <Image src={logoFeerie} alt="Féerie" class="h-10 w-auto object-contain lg:h-12" densities={[1, 2]} />
+        </a>
+        <span class="text-xl text-dim select-none" aria-hidden="true">&times;</span>
+        <a
+          href="https://www.instagram.com/wepaproducciones"
+          target="_blank"
+          rel="noopener"
+          aria-label="WEPPA Producciones on Instagram"
+          class="transition-opacity duration-300 hover:opacity-70"
+        >
+          <Image src={logoWepa} alt="WEPPA Producciones" class="h-12 w-auto object-contain lg:h-14" densities={[1, 2]} />
+        </a>
+      </div>
+      <p class="text-xs leading-relaxed text-dim">
+        Brands served across our alliance by WEPPA Producciones, Buenos Aires.
+      </p>
+    </div>
+
+    <!-- Mobile y tablet vertical: marquesina simple de una línea (CSS puro) -->
+    <div
+      class="-mx-5 overflow-hidden sm:-mx-8 lg:hidden"
+      style="mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)"
+    >
+      <div class="al-strip flex w-max">
+        {
+          [0, 1].map((copy) => (
+            <div class="flex items-center gap-14 pr-14" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {brandLogos.map((b) => (
+                <Image
+                  src={b.image}
+                  alt={copy === 0 ? b.name : ''}
+                  height={44}
+                  draggable="false"
+                  class="h-9 w-auto object-contain opacity-45 brightness-0 invert select-none"
+                  loading="eager"
+                />
+              ))}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Desktop y tablet landscape: pared de marcas vertical -->
+    <div
+      class="hidden h-[clamp(20rem,48vh,27rem)] min-w-0 grid-cols-3 gap-14 lg:grid"
+      style="mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);-webkit-mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent)"
+    >
+      {
+        columns.map((col, i) => (
+          <div class="overflow-hidden">
+            <div
+              class={`al-colstrip flex w-full flex-col ${i % 2 === 1 ? 'al-colstrip-rev' : ''}`}
+              style={`--dur:${colDurs[i]}s`}
+            >
+              {[0, 1].map((copy) => (
+                <div
+                  class="flex flex-col items-center gap-16 pb-16"
+                  aria-hidden={copy === 1 ? 'true' : undefined}
+                >
+                  {col.map((b) => (
+                    <Image
+                      src={b.image}
+                      alt={copy === 0 ? b.name : ''}
+                      height={48}
+                      draggable="false"
+                      class="h-11 w-auto max-w-full object-contain opacity-45 brightness-0 invert select-none"
+                      loading="lazy"
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
