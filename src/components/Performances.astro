@@ -3,6 +3,9 @@ import { Image } from 'astro:assets';
 import { performances, imagesFor } from '../data/performances';
 
 const items = performances.map((p) => ({ ...p, cover: imagesFor(p.slug)[0] }));
+const BASE = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + '/';
 ---
 
 <section id="performances" class="pf relative overflow-hidden bg-ink py-20 lg:py-28">
@@ -36,7 +39,7 @@ const items = performances.map((p) => ({ ...p, cover: imagesFor(p.slug)[0] }));
       {
         items.map((p) => (
           <a
-            href={`/performances/${p.slug}/`}
+            href={`${BASE}performances/${p.slug}/`}
             draggable="false"
             data-touch
             class={`pf-card group relative block h-[64svh] w-[80vw] shrink-0 overflow-hidden rounded-3xl border border-bone/10 bg-card select-none sm:w-[22rem] lg:h-[62vh] ${

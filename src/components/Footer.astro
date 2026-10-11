@@ -4,13 +4,19 @@ import logoFeerie from '../assets/logo-feerie-white.png';
 import logoBrickell from '../assets/logo-brickell-white.png';
 import { performances } from '../data/performances';
 
+const BASE = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + '/';
+const onHome = Astro.url.pathname === BASE || Astro.url.pathname === BASE.slice(0, -1);
+const anchor = (hash: string) => (onHome ? hash : `${BASE}${hash}`);
+
 const explore = [
-  { href: '#performances', label: 'Performances' },
-  { href: '#services', label: 'Services' },
-  { href: '#mission', label: 'Our Mission' },
-  { href: '#work', label: 'Our Work' },
-  { href: '#alliance', label: 'Global Presence' },
-  { href: '#contact', label: 'Contact' },
+  { href: anchor('#performances'), label: 'Performances' },
+  { href: anchor('#services'), label: 'Services' },
+  { href: anchor('#mission'), label: 'Our Mission' },
+  { href: anchor('#work'), label: 'Our Work' },
+  { href: anchor('#alliance'), label: 'Global Presence' },
+  { href: anchor('#contact'), label: 'Contact' },
 ];
 
 ---
@@ -18,7 +24,7 @@ const explore = [
 <footer id="site-footer" class="relative overflow-hidden border-t border-line bg-ink">
   <div class="grid gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr] lg:gap-10 lg:px-12 lg:py-20">
     <div class="flex flex-col gap-6">
-      <a href="#" aria-label="Féerie, back to top" class="w-fit">
+      <a href={onHome ? '#' : BASE} aria-label="Féerie, back to top" class="w-fit">
         <Image src={logoFeerie} alt="Féerie" class="h-10 w-auto" densities={[1, 2]} />
       </a>
       <p class="max-w-[38ch] text-sm leading-relaxed text-dim">
@@ -46,7 +52,7 @@ const explore = [
       {
         performances.map((p) => (
           <a
-            href={`/performances/${p.slug}/`}
+            href={`${BASE}performances/${p.slug}/`}
             class="w-fit text-sm text-bone/85 transition-colors duration-300 hover:text-rose"
           >
             {p.name}

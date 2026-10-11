@@ -1,4 +1,7 @@
 ---
+const BASE = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + '/';
 const EMAIL = 'feerieshows@feerie.com';
 const PHONE_DISPLAY = '(786) 252 9292';
 const PHONE_TEL = '+17862529292';
@@ -34,8 +37,8 @@ const whatsapp =
       loop
       playsinline
       preload="none"
-      poster="/videos/flamenco-poster.webp"
-      src="/videos/flamenco-bg.mp4"
+      poster={`${BASE}videos/flamenco-poster.webp`}
+      src={`${BASE}videos/flamenco-bg.mp4`}
     >
     </video>
     <div

@@ -2,13 +2,20 @@
 import { Image } from 'astro:assets';
 import logoWhite from '../assets/logo-feerie-white.png';
 
+const BASE = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + '/';
+// En la home los anchors quedan puros (smooth scroll); en otras páginas van vía la home
+const onHome = Astro.url.pathname === BASE || Astro.url.pathname === BASE.slice(0, -1);
+const anchor = (hash: string) => (onHome ? hash : `${BASE}${hash}`);
+
 const links = [
-  { href: '#performances', label: 'Performances' },
-  { href: '#services', label: 'Services' },
-  { href: '#mission', label: 'Our Mission' },
-  { href: '#work', label: 'Our Work' },
-  { href: '#alliance', label: 'Global Presence' },
-  { href: '#contact', label: 'Contact' },
+  { href: anchor('#performances'), label: 'Performances' },
+  { href: anchor('#services'), label: 'Services' },
+  { href: anchor('#mission'), label: 'Our Mission' },
+  { href: anchor('#work'), label: 'Our Work' },
+  { href: anchor('#alliance'), label: 'Global Presence' },
+  { href: anchor('#contact'), label: 'Contact' },
 ];
 ---
 
@@ -55,7 +62,7 @@ const links = [
     </div>
     <div class="grain pointer-events-none absolute inset-0" aria-hidden="true"></div>
     <a
-      href="/"
+      href={BASE}
       aria-label="Féerie, back to home"
       class="nav-link absolute top-7 left-8 block sm:left-10"
     >
@@ -107,7 +114,7 @@ const links = [
       class="relative mt-[clamp(0.75rem,2.5vh,1.5rem)] flex flex-col gap-[clamp(0.8rem,2vh,1.2rem)] opacity-0 transition-opacity delay-300 duration-500 [[data-open=true]_&]:opacity-100"
     >
       <a
-        href="#contact"
+        href={anchor('#contact')}
         class="nav-link btn btn-fill w-full justify-center !py-3 text-sm"
       >
         Let&rsquo;s Work Together
