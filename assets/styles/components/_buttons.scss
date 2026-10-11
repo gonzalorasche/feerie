@@ -1,0 +1,59 @@
+@use '../base/variables' as v;
+
+/* ==========================================================
+   COMPONENT: BUTTONS (High Contrast - Ghost Style)
+========================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  text-decoration: none;
+  cursor: pointer;
+  background-color: transparent; 
+  text-transform: uppercase;
+  font-family: v.$font-titles;
+  font-weight: v.$weight-bold;
+
+  // BOTÓN PRINCIPAL (Ahora con contraste para fondo oscuro)
+  &--primary {
+    // Usamos Petal (Rosa suave) para que brille sobre el negro
+    color: v.$accent-petal; 
+    border: 1px solid rgba(v.$accent-petal, 0.5); // Borde sutil
+    
+    &:hover {
+      background-color: v.$accent-petal; // Se llena de rosa
+      color: v.$night-900; // Letra oscura para máximo contraste
+      border-color: v.$accent-petal;
+      box-shadow: 0 0 20px rgba(v.$accent-petal, 0.3);
+    }
+  }
+
+  // BOTÓN GOLD (Si quieres una variante dorada)
+  &--gold {
+    color: v.$accent-gold;
+    border: 1px solid rgba(v.$accent-gold, 0.5);
+    
+    &:hover {
+      background-color: v.$accent-gold;
+      color: v.$night-900;
+      border-color: v.$accent-gold;
+    }
+  }
+
+  /* --- TAMAÑOS --- */
+  &--sm {
+    height: 35px;
+    padding: 0 1.5rem;
+    font-size: v.$fs-small; // 1.1rem supongo
+    letter-spacing: 0.1em;
+
+    @media (max-width: 992px) {
+      height: 25px;
+      padding: 0 1.2rem;
+      font-size: 1.1rem; // Le sacamos el !important y lo bajamos un poco
+    }
+  }
+}
